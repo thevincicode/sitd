@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang='es'>
+  <head>
+	<title>Detalle-Tramite documentario</title>
+	<meta charset='utf-8'>
+  </head>
+  <body>
+    <h1>DETALLE DEL EXPEDIENTE</h1>
+    <div>
+    	<input type="button" value="DERIVAR"/>
+    	<input type="button" value="PROVEIDO"/>
+    	<input type="button" value="ARCHIVAR"/>
+    	<input type="button" value="ADJUNTAR"/>
+    </div>
+    <div>
+    	Nro Expediente : {{expediente.nro_exp}}
+    	-tipo documento : {{expediente.tipo.nombre}}
+    	-codigo documento: {{expediente.nro_doc}} 	<br>
+    	interesado: {{expediente.interesado}}<br>
+    	asunto:{{expediente.asunto}}<br>
+    	fecha:{{expediente.f_registro}}<br>
+    	tiempo aprox:{{expediente.f_fin}} <br>
+    </div>
+    <div>
+	    <table>
+	    	<tr>
+	    		<th scope="col">Ofina Origen</th>
+	    		<th scope="col">Fecha Salida</th>
+	    		<th scope="col">Ofina Destino</th>
+	    		<th scope="col">Proveido</th>
+	    		<th scope="col">Estado</th>
+	    		<th scope="col">Fecha Recep/ hora</th>
+	    	</tr>
+	    	
+			{% for histo in historial %}
+			<tr>
+				<td>{{histo.o_origen}}</td>
+				<td>{{histo.f_salida}}</td>
+				<td>{{histo.o_destino}}</td>
+		    	<td>{{histo.proveido}}</td>
+				<td>{{histo.estado}}</td>	    	
+		    	<td>{{histo.f_recepcion}}</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+  </body>
+</html>
