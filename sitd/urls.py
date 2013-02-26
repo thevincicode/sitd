@@ -11,7 +11,9 @@ urlpatterns = patterns('',
     # url(r'^$', 'sitd.views.home', name='home'),
     # url(r'^sitd/', include('sitd.foo.urls')),
 
-    url(r'^$','sitdapp.views.lista_expedientes'),
+    url(r'^$','sitdapp.views.expedientes'),
+    url(r'^expediente/(?P<id_expediente>\d+)$','sitdapp.views.expediente_detalle'),
+    #url(r'^$','sitdapp.views.login'),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:

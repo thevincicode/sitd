@@ -1,6 +1,10 @@
 from sitdapp.models import Calendario, Oficina, Formulario, Trabajador, TrabajadorHistorial, TrabajadorPersmisos, TupaRequisitos, Tupa, TupaVinculo, ExpedienteEstado, ExpedienteTipo, Expediente, Proveido, Derivar, DerivarDetalle, ExpedienteHistorial
 from django.contrib import admin
 
+class ExpedienteAdmin(admin.ModelAdmin):
+	list_display=('nro_exp','nro_doc')
+	search_fields=('nro_exp','nro_doc')
+
 admin.site.register(Calendario)
 admin.site.register(Oficina)
 admin.site.register(Formulario)
