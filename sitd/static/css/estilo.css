@@ -1,0 +1,221 @@
+#Contenedor
+{
+  width:1000px;
+  /*background-color: #EDEDED;*/ 
+}
+#Cavesera
+{
+   height: 50px;
+   width: 1000px;
+   background-color: #066A9B;
+}
+#Info
+{
+   height: 50px;
+   width: 1000px;
+   background-color: #ECECFF;
+}
+#PanelIzquierdo
+{
+   height: 600px;
+   width: 250px;
+   background-color: ;
+   margin-left: -750px;
+   margin-top: ;
+   border: 1px black none;
+}
+#PanelDerecho
+{
+   height: 600px;
+   width: 750px;
+   background-color: ;
+   margin-top: -605px;
+   margin-left: 250px;
+   border: 1px black none;
+   
+}
+#Opciones
+{
+  height: 420px;
+  width: 230px;
+  border: 1px #DCDCE6 solid;
+  margin-top: -10px;
+  border-radius: 8px;
+}
+#ContenedorMenu
+{
+  height: 30px;
+  width: 230px;
+  border: 1px black none;
+  margin-top: 5px;
+  border-radius: 8px;
+}
+#Expedientes
+{
+  height: 160px;
+  width: 194px;
+  border: 1px #DCDCE6 solid;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+#Reportes
+{
+  height: 80px;
+  width: 194px;
+  border: 1px #DCDCE6 solid;
+  border-radius: 8px;
+  margin-top: 3px;
+}
+#Buscar
+{
+  height: 110px;
+  width: 194px;
+  border: 1px #DCDCE6 solid;
+  border-radius: 8px;
+  margin-top: 3px;
+}
+#APanelDerecho
+{
+   height: 30px;
+   width: 730px;
+   background-color: ; 
+   border: 1px black none;
+   border-radius: 8px;
+   margin-top: 3px;
+}
+#BPanelDerecho
+{
+   height: 530px;
+   width: 730px;
+   background-color: ; 
+   border: 1px #DCDCE6 solid;
+   border-radius: 8px;
+   margin-top: 1px;
+}
+#FormNuevoExpediente
+{
+   height: 200px;
+   width: 710px;
+   background-color: ; 
+   border: 1px #DCDCE6 solid;
+   border-radius: 8px;
+}
+#FormNuevoTupa
+{
+   height: 240px;
+   width: 710px;
+   background-color: ; 
+   border: 1px #DCDCE6 solid;
+   border-radius: 8px;
+}
+#MenusOficina
+{
+   height: 30px;
+   width: 730px;
+   background-color: ; 
+   border: 1px black none;
+   border-radius: 8px;
+   margin-top: 10px;
+}
+#ContenedorRecibir
+{
+   height: 30px;
+   width: 730px;
+   background-color: ; 
+   border: 1px black none;
+   border-radius: 8px;
+   margin-top: 10px;   
+   text-align: left;
+   margin-left: 20px;
+}
+#DatosRecibir
+{
+   height: 480px;
+   width: 700px;
+   background-color: ; 
+   border: 1px #DCDCE6 solid;
+   border-radius: 8px;
+   margin-top: 10px;
+}
+#ControlLlegarr
+{
+   
+}
+.button
+{
+  color: blue;
+  border: 1px #DCDCE6 solid;
+  padding: 5px 75px 5px 75px;
+  /*background-color: #D5ECF0;*/
+  font-family: Calibri;
+  font-size: 15px;
+  text-decoration: none;
+  border-radius: 8px ;
+  font-weight: bold;
+}
+.Menus
+{
+     color: #62D14A;
+     border: 1px #DCDCE6 solid;
+     padding: 10px 75px 10px 75px
+     font-weight: bold;
+     border-radius: 8px ;
+     font-size: 19px;
+     font-family: Calibri;
+     margin-top: 5px;
+}
+.SMenus
+{
+     color: #62D14A;
+     border: 1px black none;
+     padding: 5px 75px 5px 75px
+     font-weight: bold;
+     border-radius: 8px ;
+     font-size: 16px;
+     font-family: Calibri;
+     margin-top: 5px;
+}
+.Sbutton
+{
+  color: blue;
+  border: 1px #DCDCE6 solid;
+  padding: 5px 40px 5px 40px;
+  /*background-color: #D5ECF0;*/
+  font-family: Calibri;
+  font-size: 15px;
+  text-decoration: none;
+  border-radius: 8px ;
+  font-weight: bold;
+  text-align: left;
+}
+.Sbutton1
+{
+  color: blue;
+  border: 1px #DCDCE6 solid;
+  padding: 5px 40px 5px 40px;
+  /*background-color: #D5ECF0;*/
+  font-family: Calibri;
+  font-size: 15px;
+  text-decoration: none;
+  border-radius: 8px ;
+  font-weight: bold;
+  
+}
+.Texto
+{
+  color: #FFFFFF;
+  text-align: left;
+ 
+}
+.TextoFormulario
+{
+   color: #0033CC;
+   font-family: Calibri;
+   font-size: 11pt;
+   text-align: ;
+}
+.table
+{
+ margin-left: 0px;
+ margin-top: 10px;
+}

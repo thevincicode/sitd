@@ -79,13 +79,6 @@ class TupaVinculo(models.Model):
 	requisitos=models.ForeignKey(TupaRequisitos)
 
 
-class  ExpedienteEstado(models.Model):
-	nombre=models.CharField(max_length=25)
-	descripcion=models.TextField(max_length=75)
-
-	def __unicode__(self):
-			return self.nombre
-
 class ExpedienteTipo(models.Model):
 	nombre=models.CharField(max_length=25)
 	descripcion=models.TextField(max_length=75)
@@ -94,6 +87,11 @@ class ExpedienteTipo(models.Model):
 			return self.nombre
 
 class Expediente(models.Model):
+	GENDER_CHOICES = (
+        ('E', 'Enviado'),
+        ('R', 'Recivido'),
+        ('A', 'Archivado'),
+    )
 	nro_exp=models.IntegerField(verbose_name=u'Numero de Expediente')
 	nro_doc=models.CharField(max_length=25)
 	folios=models.IntegerField()
@@ -104,7 +102,7 @@ class Expediente(models.Model):
 	f_registro=models.DateField(verbose_name=u'Fecha de Registro')
 	f_fint=models.DateField(verbose_name=u'Fecha de fin del tramite')
 	observacion=models.TextField(max_length=150)
-	estado=models.ForeignKey(ExpedienteEstado)
+	estado=models.CharField(max_length=1,choices=GENDER_CHOICES)
 	tipo=models.ForeignKey(ExpedienteTipo)
 	tupa=models.ForeignKey(Tupa)
 	oficina=models.ForeignKey(Oficina)

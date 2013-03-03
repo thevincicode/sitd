@@ -1,4 +1,4 @@
-from sitdapp.models import Calendario, Oficina, Formulario, Trabajador, TrabajadorHistorial, TrabajadorPersmisos, TupaRequisitos, Tupa, TupaVinculo, ExpedienteEstado, ExpedienteTipo, Expediente, Proveido, Derivar, DerivarDetalle, ExpedienteHistorial
+from sitdapp.models import Calendario, Oficina, Formulario, Trabajador, TrabajadorHistorial, TrabajadorPersmisos, TupaRequisitos, Tupa, TupaVinculo, ExpedienteTipo, Expediente, Proveido, Derivar, DerivarDetalle, ExpedienteHistorial
 from django.contrib import admin
 
 class ExpedienteAdmin(admin.ModelAdmin):
@@ -14,7 +14,6 @@ admin.site.register(TrabajadorPersmisos)
 admin.site.register(TupaRequisitos)
 admin.site.register(Tupa)
 admin.site.register(TupaVinculo)
-admin.site.register(ExpedienteEstado)
 admin.site.register(ExpedienteTipo)
 admin.site.register(Expediente)
 admin.site.register(Proveido)

@@ -18,7 +18,7 @@ function desactivar(){
 			           document.datos.elements[i].checked=false;
 					}
 
-function recibir(a,b,c)
+function toogle(a,b,c)
 				{
 				 // document.getElementById(b).style.display=a;
 				  //document.getElementById(c).style.display=a;
@@ -63,7 +63,7 @@ function recibir(a,b,c)
 				  			document.getElementById("ventana1").innerHTML="";
 
 				  			var contenedor = document.getElementById('ventana1'); 
-							var nuevodiv = '';
+							var nuevodiv = '<div>Oficina destino: <select id="oficina" name="oficina"> {% for org in oficinas %} <option value="{{org.id}}"> {{org.nombre|capfirst}} </option> {% endfor %}  </select> Folios: 28  Son las {{hora}} </div> ';
 				 			contenedor.innerHTML += nuevodiv;							
 							nuevodiv='';
 							var tabla=new Array();
@@ -136,7 +136,8 @@ function cancelar(a,b,c)
 				  document.getElementById(b).style.display=a;
 				  document.getElementById(c).style.display=a;
 				  document.getElementById("ventana1").style.display=a;
-				  
+				  document.getElementById("ventana2").style.display=a;
+				  document.getElementById("ventana3").style.display=a;
 				}
 function imprimir(theForm)
 				{
@@ -169,20 +170,107 @@ function imprSelec()
 				{
 					var ficha=document.getElementById("Cavesera");
 					var ubicacion=document.getElementById("APanelDerecho");
-					var detalle=document.getElementById("detalle");
 					var imprimirr=document.getElementById("imprimir");
 					//ficha.innerHTML += imprimirr;
 					var ventimp=window.open(' ','popimpr');
 					ventimp.document.write(ficha.innerHTML);
 					ventimp.document.write(ubicacion.innerHTML);
-					ventimp.document.write(detalle.innerHTML);
 					ventimp.document.write(imprimirr.innerHTML);					
 					ventimp.document.close();
 					ventimp.print();
 					ventimp.close();
 				}
 
+function archivar(a,b,c)
+				{
+					doc_derivar=[];
+				  for (var i = 0, long = doc.length; i < long; i++)
+				  {
+		  			//var nombrecheck= "document.datos."+doc[i][0]+".checked";
+		  			//alert("el "+i+" deberia llamarce: " + nombrecheck);
+		  				//if(nombrecheck==true)
+		  				chk=document.getElementsByName('che');
+						for(e=0;e<chk.length;e++)
+						if(chk[e].id==doc[i][0] && chk[e].checked)
+					  	{
+					  		//alert("entro unno")
+					  		var long_der = doc_derivar.length;
 
+				  			doc_derivar[long_der]=new Array(8);
+
+					  		doc_derivar[long_der][0]=doc[i][0];
+					  		doc_derivar[long_der][1]=doc[i][1];
+					  		doc_derivar[long_der][2]=doc[i][2];
+					  		doc_derivar[long_der][3]=doc[i][3];
+					  		doc_derivar[long_der][4]=doc[i][4];
+					  		doc_derivar[long_der][5]=doc[i][5];
+					  		doc_derivar[long_der][6]=doc[i][6];
+					  		doc_derivar[long_der][7]=doc[i][7];
+					  	}	
+				  }
+
+				  if(doc_derivar.length==0)
+				  {
+				  	alert("Debe de seleccionar almenos un Documento antes de Archivar");
+				  }
+				  else
+				  {
+				  		try {
+				  			//buscando tabla para eliminar
+				  			document.getElementById("ventana3").innerHTML="";
+
+				  			var contenedor = document.getElementById('ventana3'); 
+							var nuevodiv = '';
+				 			contenedor.innerHTML += nuevodiv;							
+							nuevodiv='';
+							var tabla=new Array();
+							var tmp='';
+						  	for(i=0;i<doc_derivar.length;i++)
+						  	{
+						  		tmp='';
+						  		tabla[i]='';
+						  		tmp='<tr>';
+						  		tabla[i] += tmp;
+						  		tmp='<td><input type="hidden" name="hi" id="hi' +doc_derivar[i][7]+ '" value="' +doc_derivar[i][7]+'"/></td>';
+						  		tabla[i] += tmp;
+						  		for(j=0;j<8;j++)
+						  		{
+						  			if(j<7)
+						  			{
+						  				if(j>0)
+						  				{
+							  				tmp='<td>' + doc_derivar[i][j] + '</td>';
+							  				tabla[i] += tmp;	
+						  				}
+						  			}
+						  			else
+						  			{
+						  				tmp='<td>' + '<a href="/expediente/'+doc_derivar[i][j]+'">Detalles</a>' + '</td>';
+						  				tabla[i] += tmp;
+						  			}
+						  		}
+						  		
+						  		tmp='</tr>';
+						  		tabla[i] += tmp;
+						  		//alert(tabla[i]);
+						  	}
+						  	nuevodiv='';
+						  	for(i=0;i<tabla.length;i++)
+						  	{
+						  		nuevodiv +=tabla[i];
+						  	}
+					  		nuevodiv ='<div> <table id="tab2">' +nuevodiv+'</table></div><br>';
+					  		contenedor.innerHTML += nuevodiv;
+					  		
+						  document.getElementById(b).style.display=a;
+						  document.getElementById(c).style.display=a;
+						  document.getElementById("ventana2").style.display=a;
+						  document.getElementById("ventana3").style.display=a;
+
+							}
+						catch(mierror){}
+				  }
+				}
 </script>
 
   	<head>
@@ -230,47 +318,75 @@ function imprSelec()
 			<div id="PanelDerecho">
 				<center>
 						 <div id="APanelDerecho">
-							 <p class="Menus">DETALLE EXPEDIENTE</p>
+							 <p class="Menus">Expedientes en mi Oficina</p>
 						 </div>
 						 <div id="BPanelDerecho">
 							<div id = "MenusOficina">
-						    	
+								 <input type="checkbox" name="Todos" OnClick="if (document.datos.Todos.checked==true){activar();}
+																			else {desactivar();}" >
+								 <a href="#" class ="Sbutton" onclick="toogle('block','modal','ventana')">DERIVAR</a>
+								 <a href="#" class ="Sbutton" onclick="archivar('block','modal2','ventana2')">ARCHIVAR</a>
+								 <a href="" class ="Sbutton">Adjuntar</a>               
+								 <a href="" class ="Sbutton" onclick="imprSelec()">Imprimir</a>  
 							</div>
-							<div id ="detalle">
-								Nro Expediente : {{expediente.nro_exp}}
-						    	-tipo documento : {{expediente.tipo.nombre}}
-						    	-codigo documento: {{expediente.nro_doc}} 	<br>
-						    	interesado: {{expediente.interesado}}<br>
-						    	asunto:{{expediente.asunto}}<br>
-						    	fecha:{{expediente.f_registro}}<br>
-						    	tiempo aprox:{{expediente.f_fin}} <br>
-							</div>							
-							<form name="datos" method="post">
+							
+							<form name="datos" method="get">
 								<div id="imprimir">
 									<table>
-								    	<tr>
-								    		<th scope="col">Ofina Origen</th>
-								    		<th scope="col">Fecha Salida</th>
-								    		<th scope="col">Ofina Destino</th>
-								    		<th scope="col">Proveido</th>
-								    		<th scope="col">Estado</th>
-								    		<th scope="col">Fecha Recep/ hora</th>
-								    	</tr>
-								    	
-										{% for histo in historial %}
 										<tr>
-											<td>{{histo.o_origen}}</td>
-											<td>{{histo.f_salida}}</td>
-											<td>{{histo.o_destino}}</td>
-									    	<td>{{histo.proveido}}</td>
-											<td>{{histo.estado}}</td>	    	
-									    	<td>{{histo.f_recepcion}}</td>
+											<th scope="col"></th>
+											<th scope="col">Numero</th>
+											<th scope="col">Codigo Expediente</th>
+											<th scope="col">Presentado por</th>
+											<th scope="col">Asunto</th>
+											<th scope="col">Destino</th>
+											<th scope="col">Fecha</th>
+											<th scope="col">Detalles</th>
+										</tr>
+										
+										{% for elemento in lista %}
+										<tr>
+											<td><input type="checkbox" name="che" id="che{{elemento.id}}"><br></td>
+											<td>{{elemento.nro_exp}}</td>
+											<td>{{elemento.nro_doc}}</td>
+											<td>{{elemento.interesado}}</td>
+											<td>{{elemento.asunto}}</td>
+											<td>{{elemento.oficina.nombre}}</td>	    	
+											<td>{{elemento.f_registro}}</td>
+											<td><a href="/expediente/{{elemento.id}}">Detalles</a></td>
+
+											<script type="text/javascript">
+												documentos("che{{elemento.id}}","{{elemento.nro_exp}}","{{elemento.nro_doc}}","{{elemento.interesado}}","{{elemento.asunto}}","{{elemento.oficina.nombre}}","{{elemento.f_registro}}","{{elemento.id}}");
+											</script>
 										</tr>
 										{% endfor %}
 									</table>
 								</div>
-								<div>
-									<a href="" class ="Sbutton" onclick="imprSelec()">IMPRIMIR</a>  
+							</form>
+							<form action='/derivar/' method="POST"> {% csrf_token %}
+								<div id="modal" style="display:none">
+									<div id="ventana" class="contenedor" style="display:none">
+										 <h2>DERIVAR EXPEDIENTE</h2> 
+										 <a href="#close" title="Cerrar" onclick="cancelar('none','modal','ventana')">Close</a>
+										<div id="ventana1" class="contenedor1" style="display:none">
+										
+										</div>
+										<input type="submit" value="DERIVAR"></input>
+										<input type="button" value="CANCELAR" onclick=cancelar("none","modal","ventana")></input>
+									</div>
+								</div>
+							</form>	
+							<form action='/archivar/' method="POST"> {% csrf_token %}
+								<div id="modal2" style="display:none">
+									<div id="ventana2" class="contenedor" style="display:none">
+										 <h2>ARCHIVAR EXPEDIENTE</h2> 
+										 <a href="#close" title="Cerrar" onclick="cancelar('none','modal2','ventana2')">Close</a>
+										<div id="ventana3" class="contenedor1" style="display:none">
+										
+										</div>
+										<input type="submit" value="ARCHIVAR"></input>
+										<input type="button" value="CANCELAR" onclick=cancelar("none","modal2","ventana2")></input>
+									</div>
 								</div>
 							</form>
 							
