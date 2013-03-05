@@ -39,7 +39,7 @@
   height: 420px;
   width: 230px;
   border: 1px #DCDCE6 solid;
-  margin-top: -10px;
+  margin-top: 0px;
   border-radius: 8px;
 }
 #ContenedorMenu
@@ -128,6 +128,20 @@
    text-align: left;
    margin-left: 20px;
 }
+#imprimir
+{
+   height: 470px;
+   width: 730px;
+   background-color: ; 
+   border: 1px black none;
+   border-radius: 8px;
+   margin-top: 10px;   
+   text-align: left;
+   margin-left: 20px;
+   overflow:auto;
+   z-index:8;
+}
+
 #DatosRecibir
 {
    height: 480px;
@@ -137,6 +151,65 @@
    border-radius: 8px;
    margin-top: 10px;
 }
+#DatosRecibirEnOficina
+{
+   height: 480px;
+   width: 700px;
+   background-color: ; 
+   border: 1px #DCDCE6 solid;
+   border-radius: 8px;
+   margin-top: 0px;
+}
+#MostrarDatosExpedientes
+{
+   height: 150px;
+   width: 700px;
+   background-color: ; 
+   border: 1px #DCDCE6 solid;
+   border-radius: 0px;
+   margin-top: 0px;
+}
+#MostrarDatosExpedientesMas
+{
+   height: 328px;
+   width: 700px;
+   background-color: ; 
+   border: 1px #DCDCE6 solid;
+   border-radius: 0px;
+   margin-top: 0px;  
+}
+#DetalleDerivar
+{
+   height: 328px;
+   width: 600px;
+   background-color: ; 
+   border: 2px #DCDCE6 solid;
+   border-radius: 0px;
+   margin-top: 0px;
+}
+#InformacionDerivar
+{
+   height: 150px;
+   width: 600px;
+   background-color: ; 
+   border: 5px #DCDCE6 solid;
+   border-radius: 0px;
+   margin-top: 0px;
+}
+#Copirigh
+{
+   height: 20px;
+   width: 1000px;
+   background-color: #DCDCE6 ; 
+   border: 1px #DCDCE6 solid;
+   border-radius: 8px;
+   margin-top: 10px;   
+   text-align: left;
+   margin-left: 20px;
+   color: black;
+   font-family: tahoma,Calibri;
+   font-size: 11pt;
+}
 #ControlLlegarr
 {
    
@@ -145,19 +218,19 @@
 {
   color: blue;
   border: 1px #DCDCE6 solid;
-  padding: 5px 75px 5px 75px;
-  /*background-color: #D5ECF0;*/
+  padding: 5px 75px 5px 75px;  
   font-family: Calibri;
   font-size: 15px;
   text-decoration: none;
   border-radius: 8px ;
   font-weight: bold;
+  background-color: #EDEDED;
 }
 .Menus
 {
      color: #62D14A;
      border: 1px #DCDCE6 solid;
-     padding: 10px 75px 10px 75px
+     padding: /*10px 75px 10px 75px;*/;
      font-weight: bold;
      border-radius: 8px ;
      font-size: 19px;
@@ -168,7 +241,7 @@
 {
      color: #62D14A;
      border: 1px black none;
-     padding: 5px 75px 5px 75px
+     padding: /* 5px 75px 5px 75px; */;
      font-weight: bold;
      border-radius: 8px ;
      font-size: 16px;
@@ -187,6 +260,8 @@
   border-radius: 8px ;
   font-weight: bold;
   text-align: left;
+  background-color: #EDEDED;
+  
 }
 .Sbutton1
 {
@@ -199,6 +274,7 @@
   text-decoration: none;
   border-radius: 8px ;
   font-weight: bold;
+  background-color: #EDEDED;
   
 }
 .Texto
@@ -213,6 +289,12 @@
    font-family: Calibri;
    font-size: 11pt;
    text-align: ;
+}
+.TextoData
+{
+   color: black;
+   font-family: Calibri;
+   font-size: 11pt;
 }
 .table
 {

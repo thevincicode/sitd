@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html lang='es'>
-<script lenguage="javascript">
+<script lenguage="javascript" type="text/javascript">
 var doc=new Array();
 var doc_derivar=new Array();
 
 function activar(){
-				document.datos.Todos.checked=true;
-				for (i=0;i<document.datos.elements.length;i++) 
-			    	if(document.datos.elements[i].type == "checkbox")	
-			           document.datos.elements[i].checked=true; 
-				}
-
-function desactivar(){
-				document.datos.Todos.checked=false;
-				for (i=0;i<document.datos.elements.length;i++) 
-			    	if(document.datos.elements[i].type == "checkbox")	
-			           document.datos.elements[i].checked=false;
+				if(document.marcar.mTodos.checked==true)
+				{
+					for (i=0;i<document.datos.elements.length;i++)
+					{
+						if(document.datos.elements[i].type == "checkbox")	
+				           document.datos.elements[i].checked=1; 
 					}
+					//document.datos.Todos.checked=true;
+					
+				}
+				else
+				{
+					for (i=0;i<document.datos.elements.length;i++) 
+						{
+				    	if(document.datos.elements[i].type == "checkbox")	
+				           document.datos.elements[i].checked=0;
+				       }
+				       document.marcar.mTodos.checked=false;
+				}
+			}
 
 function toogle(a,b,c)
 				{
@@ -109,6 +117,7 @@ function toogle(a,b,c)
 						  document.getElementById(b).style.display=a;
 						  document.getElementById(c).style.display=a;
 						  document.getElementById("ventana1").style.display=a;
+						  document.getElementById("ventanaC").style.display=a;
 
 							}
 						catch(mierror){}
@@ -138,6 +147,7 @@ function cancelar(a,b,c)
 				  document.getElementById("ventana1").style.display=a;
 				  document.getElementById("ventana2").style.display=a;
 				  document.getElementById("ventana3").style.display=a;
+				  document.getElementById("ventanaC").style.display=a;
 				}
 function imprimir(theForm)
 				{
@@ -168,6 +178,13 @@ function imprimir(theForm)
 				}
 function imprSelec()
 				{
+					//document.all.item("che").style.visibility='hidden';
+					//document.all.item("ref").style.visibility='hidden';
+					for (i=0;i<document.datos.elements.length;i++)
+					{
+						if(document.datos.elements[i].type == "checkbox")	
+				           document.datos.elements[i].style.visibility='hidden';
+					}
 					var ficha=document.getElementById("Cavesera");
 					var ubicacion=document.getElementById("APanelDerecho");
 					var imprimirr=document.getElementById("imprimir");
@@ -179,6 +196,11 @@ function imprSelec()
 					ventimp.document.close();
 					ventimp.print();
 					ventimp.close();
+					for (i=0;i<document.datos.elements.length;i++)
+					{
+						if(document.datos.elements[i].type == "checkbox")	
+				           document.datos.elements[i].style.visibility='visible';
+					}
 				}
 
 function archivar(a,b,c)
@@ -266,7 +288,7 @@ function archivar(a,b,c)
 						  document.getElementById(c).style.display=a;
 						  document.getElementById("ventana2").style.display=a;
 						  document.getElementById("ventana3").style.display=a;
-
+						  document.getElementById("ventanaC").style.display=a;
 							}
 						catch(mierror){}
 				  }
@@ -298,19 +320,21 @@ function archivar(a,b,c)
 							<div id = "Expedientes">
 							   <p class="SMenus">EXPEDIENTES</p>
 							   <a href="/" class="Sbutton">En Oficina</a><br><br>
-							   <a href="/bandeja" class="Sbutton">Por Llegar</a>
-							   <a href="/archivados" class="Sbutton">Archivados</a>
+							   <a href="/bandeja" class="Sbutton">Por Llegar</a><br><br>
+							   <a href="/archivados" class="Sbutton">Archivados</a><br><br>
 							</div>
 							<div id="Reportes">
 							   <p class="SMenus">Reportes</p>
 							   <a href="" class="Sbutton">Reportes</a>
 							</div> 
-							<div id="Buscar">
-							   <p class="SMenus">Codigo y/o Numero</p>
-							   <br>
-							   <br>
-							   <a href="" class="Sbutton">Buscar</a>
-							</div>                  
+							<form action='/buscar/' name="buscar" method="GET">
+								<div>
+								   <p class="SMenus">Codigo y/o Interesado</p>
+								   <br>
+								   <input type="text" name="b" id="b"></input>
+								   <input type="submit" value="BUSCAR" class="Sbutton"></input>
+								</div>
+							</form>                  
 						</div>
 					</center>
 				</div>
@@ -322,18 +346,19 @@ function archivar(a,b,c)
 						 </div>
 						 <div id="BPanelDerecho">
 							<div id = "MenusOficina">
-								 <input type="checkbox" name="Todos" OnClick="if (document.datos.Todos.checked==true){activar();}
-																			else {desactivar();}" >
-								 <a href="#" class ="Sbutton" onclick="toogle('block','modal','ventana')">DERIVAR</a>
-								 <a href="#" class ="Sbutton" onclick="archivar('block','modal2','ventana2')">ARCHIVAR</a>
-								 <a href="" class ="Sbutton">Adjuntar</a>               
-								 <a href="" class ="Sbutton" onclick="imprSelec()">Imprimir</a>  
+								 <form name="marcar"> 
+									 <input type="checkbox"  id="mTodos" name="mTodos" onclick="activar()">Todos</input>
+									 <input type="button" value="DERIVAR" class="Sbutton" onclick="toogle('block','modal','ventana')"></input>
+									 <input type="button" value="ARCHIVAR" class="Sbutton" onclick="archivar('block','modal2','ventana2')"></input>
+									 <a href="" class ="Sbutton">ADJUNTAR</a>               
+									 <input type="button" value="IMPRIMIR" class="Sbutton" onclick="imprSelec()"></input>
+								 </form> 
 							</div>
 							
 							<form name="datos" method="get">
-								<div id="imprimir">
-									<table>
-										<tr>
+								<div id="imprimir" >
+									<table class="table" width="700" border="0" >
+										<tr class="TextoFormulario">
 											<th scope="col"></th>
 											<th scope="col">Numero</th>
 											<th scope="col">Codigo Expediente</th>
@@ -345,15 +370,15 @@ function archivar(a,b,c)
 										</tr>
 										
 										{% for elemento in lista %}
-										<tr>
-											<td><input type="checkbox" name="che" id="che{{elemento.id}}"><br></td>
-											<td>{{elemento.nro_exp}}</td>
-											<td>{{elemento.nro_doc}}</td>
-											<td>{{elemento.interesado}}</td>
-											<td>{{elemento.asunto}}</td>
-											<td>{{elemento.oficina.nombre}}</td>	    	
-											<td>{{elemento.f_registro}}</td>
-											<td><a href="/expediente/{{elemento.id}}">Detalles</a></td>
+										<tr class="TextoData">
+											<td width="50"><input type="checkbox" name="che" id="che{{elemento.id}}"><br></td>
+											<td width="70">{{elemento.nro_exp}}</td>
+											<td width="100">{{elemento.nro_doc}}</td>
+											<td width="150">{{elemento.interesado}}</td>
+											<td width="100">{{elemento.asunto}}</td>
+											<td width="100">{{elemento.oficina.nombre}}</td>	    	
+											<td width="80">{{elemento.f_registro}}</td>
+											<td width="50"><a href="/expediente/{{elemento.id}}" name="ref">Detalles</a></td>
 
 											<script type="text/javascript">
 												documentos("che{{elemento.id}}","{{elemento.nro_exp}}","{{elemento.nro_doc}}","{{elemento.interesado}}","{{elemento.asunto}}","{{elemento.oficina.nombre}}","{{elemento.f_registro}}","{{elemento.id}}");
@@ -370,6 +395,10 @@ function archivar(a,b,c)
 										 <a href="#close" title="Cerrar" onclick="cancelar('none','modal','ventana')">Close</a>
 										<div id="ventana1" class="contenedor1" style="display:none">
 										
+										</div><br>
+										Comentario
+										<div id="ventanaC">
+											<textarea id="comentario" style="margin: 2px; width: 500px; height: 60px;"></textarea>
 										</div>
 										<input type="submit" value="DERIVAR"></input>
 										<input type="button" value="CANCELAR" onclick=cancelar("none","modal","ventana")></input>
@@ -381,8 +410,12 @@ function archivar(a,b,c)
 									<div id="ventana2" class="contenedor" style="display:none">
 										 <h2>ARCHIVAR EXPEDIENTE</h2> 
 										 <a href="#close" title="Cerrar" onclick="cancelar('none','modal2','ventana2')">Close</a>
-										<div id="ventana3" class="contenedor1" style="display:none">
+										<div id="ventana3" class="contenedor" style="display:none">
 										
+										</div><br>
+										Comentario
+										<div id="ventanaC">
+											<textarea id="comentario" style="margin: 2px; width: 500px; height: 60px;"></textarea>
 										</div>
 										<input type="submit" value="ARCHIVAR"></input>
 										<input type="button" value="CANCELAR" onclick=cancelar("none","modal2","ventana2")></input>
@@ -390,9 +423,13 @@ function archivar(a,b,c)
 								</div>
 							</form>
 							
-						</div>						
+						</div>
+											
 				</center>
 			</div>
+			<div id="Copirigh">
+				Copyright Sigmadelsur © 2013 Todos Los Derechos Reservados
+			</div>	
 		</center>
 	</body>
 </html>

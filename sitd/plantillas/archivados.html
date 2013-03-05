@@ -187,19 +187,21 @@ function archivar(a,b,c)
 							<div id = "Expedientes">
 							   <p class="SMenus">EXPEDIENTES</p>
 							   <a href="/" class="Sbutton">En Oficina</a><br><br>
-							   <a href="/bandeja" class="Sbutton">Por Llegar</a>
-							   <a href="/archivados" class="Sbutton">Archivados</a>
+							   <a href="/bandeja" class="Sbutton">Por Llegar</a><br><br>
+							   <a href="/archivados" class="Sbutton">Archivados</a><br><br>
 							</div>
 							<div id="Reportes">
 							   <p class="SMenus">Reportes</p>
 							   <a href="" class="Sbutton">Reportes</a>
 							</div> 
-							<div id="Buscar">
-							   <p class="SMenus">Codigo y/o Numero</p>
-							   <br>
-							   <br>
-							   <a href="" class="Sbutton">Buscar</a>
-							</div>                  
+							<form action='/buscar/' name="buscar" method="GET">
+								<div>
+								   <p class="SMenus">Codigo y/o Interesado</p>
+								   <br>
+								   <input type="text" name="b" id="b"></input>
+								   <input type="submit" value="BUSCAR" class="Sbutton"></input>
+								</div>
+							</form>                   
 						</div>
 					</center>
 				</div>
@@ -263,6 +265,9 @@ function archivar(a,b,c)
 						</div>						
 				</center>
 			</div>
+			<div id="Copirigh">
+				Copyright Sigmadelsur © 2013 Todos Los Derechos Reservados
+			</div>	
 		</center>
 	</body>
 </html>

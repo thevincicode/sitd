@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from datetime import datetime
 
 def expedientes(request):
-	#ahora = datetime.datetime.now()
+	#ahora = datetime.datetime.now() today = datetime.now()
     oficinas = Oficina.objects.all()
     proveidos = Proveido.objects.all()
     expediente = Expediente.objects.filter(estado="R")
@@ -37,15 +37,34 @@ def expediente_detalle(request,id_expediente):
 	historial=ExpedienteHistorial.objects.filter(expediente=expediente)
 	return render_to_response('expediente_detalle.html',{'expediente':expediente, 'historial':historial},context_instance=RequestContext(request))
 
+def buscador(request):    
+    if request.GET.get("b"):
+        buscar = str(''+ request.GET["b"]+'')
+        try:
+            buscar=int(buscar)
+            buscador=Expediente.objects.filter(nro_exp=buscar)
+            return render_to_response('buscador.html',{'lista':buscador},context_instance=RequestContext(request))    
+        except Exception, e:
+            buscador=Expediente.objects.filter(interesado__contains=buscar)
+            return render_to_response('buscador.html',{'lista':buscador},context_instance=RequestContext(request))    
+            print "parametro a buscar es: " + buscar
+            #buscar = '%r' % request.GET['b']
+        
+    else:
+        html="<html><body>no envio ningun parametro</body></html>"
+        return HttpResponse(html)
+    
+
 def expediente_derivar(request):
     if request.method == "POST":
         id_s = request.POST.getlist("hi")
-        #oficina = request.POST.get('oficina', '')
+        comentario = request.POST.get('comentario','')
         oficina_s = request.POST.getlist("oficina")
         proveido_s = request.POST.getlist("proveido")
         print 'documentos ' + str(len(id_s))
         print 'oficinas ' + str(len(oficina_s))
         print 'proveidos ' + str(len(proveido_s))
+        print 'el comentario fue: ' + comentario
         #html="<html><body>logramos capturar datos, intentando acceder</body></html>"
         try:
             if(len(id_s)>0): 
@@ -68,7 +87,7 @@ def expediente_derivar(request):
                         idoficina=o
                         oficina = get_object_or_404(Oficina, pk=idoficina)
                         #generando un objeto de tipo Derivar y guardando
-                        derivar_obj=Derivar(fecha="2013-01-02",estado="E",comentario="",proveido=proveido,oficina=oficina)
+                        derivar_obj=Derivar(fecha="2013-01-02",estado="E",comentario=comentario,proveido=proveido,oficina=oficina)
                         derivar_obj.save()
                         print "se derivo"
                         #obteniendo el ultimo id registrado
@@ -174,42 +193,4 @@ def expediente_recibir(request):
         html="<html><body>Error de envio</body></html>"
         return HttpResponse(html)
        
-
-def login(request):
-	 # If we submitted the form...
-    if request.method == 'POST':
-
-        # Check that the test cookie worked (we set it below):
-        if request.session.test_cookie_worked():
-
-            # The test cookie worked, so delete it.
-            request.session.delete_test_cookie()
-
-            # In practice, we'd need some logic to check username/password
-            # here, but since this is an example...
-            return HttpResponse("You're logged in.")
-
-        # The test cookie failed, so display an error message. If this
-        # was a real site we'd want to display a friendlier message.
-        else:
-            return HttpResponse("Please enable cookies and try again.")
-
-    # If we didn't post, send the test cookie along with the login form.
-    request.session.set_test_cookie()
-    return render_to_response('foo/login_form.html')
-    #aca devemos agregar un codigo para logear
-    try:
-        m = Trabajador.objects.get(username__exact=request.POST['usuario'])
-        if m.password == request.POST['pwd']:
-            request.session['member_id'] = m.id
-            return HttpResponse("You're logged in.")
-    except Trabajador.DoesNotExist:
-        return HttpResponse("Your username and password didn't match.")
-
-def logout(request):
-    try:
-        del request.session['member_id']
-    except KeyError:
-        pass
-    return HttpResponse("You're logged out.")
 

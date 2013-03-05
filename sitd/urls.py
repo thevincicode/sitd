@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^archivados/$', 'sitdapp.views.archivados'),
     url(r'^bandeja/$', 'sitdapp.views.porrecibir'),
     url(r'^recibir/$', 'sitdapp.views.expediente_recibir'),
+    url(r'^buscar/$','sitdapp.views.buscador'),
     #url(r'^$','sitdapp.views.login'),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 

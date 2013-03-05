@@ -6,7 +6,7 @@ from django.forms import ModelForm
 
 class Calendario(models.Model):
 	dia=models.CharField(max_length=15, verbose_name=u'dia de la semana', help_text='lunes, martes..')
-	fecha=models.DateField()
+	fecha=models.DateTimeField()
 	estado=models.BooleanField(verbose_name='laborable',help_text='laborable o feriado')
 	descripcion=models.TextField(max_length=250,verbose_name='(Opcional)')	
 	
@@ -31,7 +31,7 @@ class Trabajador(models.Model):
 	dni=models.CharField(max_length=8, unique=True)
 	nombre=models.CharField(max_length=100)
 	apellidos=models.CharField(max_length=250)
-	f_nacimiento=models.DateField(verbose_name=u'Fecha de Nacimiento')
+	f_nacimiento=models.DateTimeField(verbose_name=u'Fecha de Nacimiento')
 	cargo=models.CharField(max_length=25)
 	usuario=models.CharField(max_length=25)
 	psw=models.CharField(max_length=25)
@@ -41,7 +41,7 @@ class Trabajador(models.Model):
 			return self.dni
 
 class TrabajadorHistorial(models.Model):
-	fecha=models.DateField()
+	fecha=models.DateTimeField()
 	oficina=models.CharField(max_length=25)
 	echo=models.CharField(max_length=25)
 	trabajador=models.ForeignKey(Trabajador)
@@ -98,9 +98,9 @@ class Expediente(models.Model):
 	interesado=models.CharField(max_length=55)
 	asunto=models.CharField(max_length=80)
 	destinatario=models.CharField(max_length=80)
-	f_inicio=models.DateField(verbose_name=u'Fecha de Inicio')
-	f_registro=models.DateField(verbose_name=u'Fecha de Registro')
-	f_fint=models.DateField(verbose_name=u'Fecha de fin del tramite')
+	f_inicio=models.DateTimeField(verbose_name=u'Fecha de Inicio')
+	f_registro=models.DateTimeField(verbose_name=u'Fecha de Registro')
+	f_fint=models.DateTimeField(verbose_name=u'Fecha de fin del tramite')
 	observacion=models.TextField(max_length=150)
 	estado=models.CharField(max_length=1,choices=GENDER_CHOICES)
 	tipo=models.ForeignKey(ExpedienteTipo)
@@ -124,24 +124,25 @@ class Derivar(models.Model):
         ('R', 'Recivido'),
         ('A', 'Archivado'),
     )
-	fecha=models.DateField()
+	fecha=models.DateTimeField()
 	estado=models.CharField(max_length=1,choices=GENDER_CHOICES)
 	comentario=models.TextField(max_length=150)
 	proveido=models.ForeignKey(Proveido)
 	oficina=models.ForeignKey(Oficina)
 
 class DerivarDetalle(models.Model):
-	fecha=models.DateField()
+	fecha=models.DateTimeField()
 	expediente=models.ForeignKey(Expediente)
 	derivar=models.ForeignKey(Derivar)
 
 
 class ExpedienteHistorial(models.Model):
-	f_salida=models.DateField(verbose_name=u'Fecha de Salida')
+	f_salida=models.DateTimeField(verbose_name=u'Fecha de Salida')
 	o_origen=models.CharField(max_length=50, verbose_name=u'Oficina de origen')
 	o_destino=models.CharField(max_length=50, verbose_name=u'Ofina de destino')
-	f_recepcion=models.DateField(verbose_name=u'Fecha de recepcion')
+	f_recepcion=models.DateTimeField(verbose_name=u'Fecha de recepcion')
 	estado=models.CharField(max_length=250)
 	proveido=models.CharField(max_length=250)
 	expediente=models.ForeignKey(Expediente)
 	ubicacion=models.CharField(max_length=150)
+	comentario=models.TextField(max_length=1000, verbose_name=u'Comentario',help_text='maximo 1000 caracteres')
