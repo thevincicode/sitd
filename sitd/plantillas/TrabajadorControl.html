@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang='es'>
+	<head>
+		<title>Control de los trabajadores</title>
+	</head>
+	<body>
+		<header>
+			<h2>Listado General De Los Trabajadores Registradas</h2>
+			<a href='/TrabajadorNuevo'>Nuevo</a>
+		</header>
+		<section>
+			{{ Info }}<br>
+			<form name='ListaTrabajador' method='GET'>
+				<table>
+					<tr>
+						<th scope="col">dni</th>
+						<th scope="col">Nombres</th>
+						<th scope="col">Apellidos</th>
+						<th scope="col">Cargo</th>
+						<th scope="col">Oficina</th>
+						<th scope="col"></th>
+						<th scope="col"></th>
+					</tr>
+					{% for Item in Form %}
+					<tr>
+						<td>{{Item.dni}}</td>
+						<td>{{Item.nombre}}</td>
+						<td>{{Item.apellidos}}</td>
+						<td>{{Item.cargo}}</td>
+						<td>{{Item.oficina}}</td>
+						<td><a href='/TrabajadorEliminarDesicion/{{Item.id}}'>Eliminar</a></td>
+						<td><a href='#'>Modificar</a></td>
+					</tr>
+					{% endfor %}
+				</table>
+			</form>
+		</section>
+	</body>
+</html>

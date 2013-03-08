@@ -1,0 +1,56 @@
+<html>
+   <head>
+   </head>
+   <body>
+   <center>
+   <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/estilousuario.css">
+      <div id="Contenedor">
+          <div id = "Cavesera">
+          </div>
+          <div id = "Info">
+          </div>
+          <div id="CuerpoLogin">
+               <div id="Logueo">
+                   <table border="0" width="400" height="150">
+                     <form name = "FormLogin" action='/Logueo/' method='POST'>{% csrf_token %}
+                      <tr>
+                           <td colspan = "2">
+                             <center> Login </center>
+                           </td>
+                      </tr>
+                      <tr>
+                            <td class="TextoLogin">
+                                 Usuario
+                            </td>
+                            <td>
+                                {{ Form.Usuario }}
+                            </td>                            
+                      </tr>
+                      <tr>
+                            <td class="TextoLogin">
+                                 Password
+                            </td>
+                            <td>
+                                 {{ Form.Contrasena }}
+                            </td>
+                      </tr>
+                      <tr>
+                            <td>
+                                <center> <input type="submit" class="button" value='Ingresar'> </center>
+                            </td>
+                            <td>
+                            </td>
+                      </tr><br>
+                      <tr>
+                        <td colspan = "2">
+                           {{ Info }}
+                        <td/>
+                      </tr>
+                     </form>
+                   </table>
+               </div>             
+          </div>          
+      </div>
+   </center>   
+   </body>
+</html>

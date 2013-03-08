@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang='es'>
+	<head>
+		<title>Control de las Oficinas</title>
+	</head>
+	<body>
+		<header>
+			<h2>Listado General De Las Oficinas Registradas</h2>
+			<a href='/OficinaNuevo'>Nuevo</a>
+		</header>
+		<section>
+			{{ Info }}<br>
+			<form name='ListaOficinas' method='GET'>
+				<table>
+					<tr>
+						<th scope="col">Nombre</th>
+						<th scope="col">Descripcion</th>
+						<th scope="col"></th>
+						<th scope="col"></th>
+					</tr>
+					{% for Item in Form %}
+					<tr>
+						<td>{{Item.nombre}}</td>
+						<td>{{Item.descripcion}}</td>
+						<td><a href='/OficinaEliminarDesicion/{{Item.id}}'>Eliminar</a></td>
+						<td><a href='#'>Modificar</a></td>
+					</tr>
+					{% endfor %}
+				</table>
+			</form>
+		</section>
+	</body>
+</html>
