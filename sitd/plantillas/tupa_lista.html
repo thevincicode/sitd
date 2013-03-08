@@ -210,35 +210,40 @@ function archivar(a,b,c)
 			<div id="PanelDerecho">
 				<center>
 						 <div id="APanelDerecho">
-							 <p class="Menus">EXPEDIENTES ARCHIVADOS</p>
+							 <p class="Menus"> Procedimientos (TUPA)</p>
 						 </div>
 						 <div id="BPanelDerecho">
 							<div id = "MenusOficina">
-								 <a href="" class ="Sbutton" onclick="imprSelec()">Imprimir</a>  
-							</div>
-							
+								 <a href="/tupa/nuevo" class ="Sbutton">NUEVO</a>
+								 <a href="" class ="Sbutton" onclick="imprSelec()">Imprimir</a>
+								 <a href="/tupa/requisitos" class ="Sbutton">REQUISITOS</a> 
+							</div>							
 							<form name="datos" method="get">
 								<div id="imprimir">
 									<table>
 										<tr>
-											<th scope="col">Numero</th>
-											<th scope="col">Codigo Expediente</th>
-											<th scope="col">Presentado por</th>
-											<th scope="col">Asunto</th>
-											<th scope="col">Destino</th>
-											<th scope="col">Fecha</th>
-											<th scope="col">Detalles</th>
+											<th scope="col">Denominacion</th>
+											<th scope="col">Descripcion</th>
+											<th scope="col">Autoridad</th>
+											<th scope="col">%(UIT)</th>
+											<th scope="col">Valor</th>
+											<th scope="col">T. Aprox.</th>
+											<th scope="col">Opciones</th>
+											<th scope="col">Opciones</th>
+											<th scope="col">Vincular</th>
 										</tr>
 										
 										{% for elemento in lista %}
 										<tr>
-											<td>{{elemento.nro_exp}}</td>
-											<td>{{elemento.nro_doc}}</td>
-											<td>{{elemento.interesado}}</td>
-											<td>{{elemento.asunto}}</td>
-											<td>{{elemento.oficina.nombre}}</td>	    	
-											<td>{{elemento.f_registro}}</td>
-											<td><a href="/expediente/{{elemento.id}}">Detalles</a></td>
+											<td>{{elemento.denominacion}}</td>
+											<td>{{elemento.descripcion}}</td>
+											<td>{{elemento.autoridad}}</td>
+											<td>{{elemento.porcentaje}}</td>
+											<td>{{elemento.valor}}</td>	    	
+											<td>{{elemento.tiempo}}</td>
+											<td><a href="/tupa/editar/{{elemento.id}}">editar</a></td>
+											<td><a href="/tupa/eliminar/{{elemento.id}}">eliminar</a></td>
+											<td><a href="/tupa/vinculo/{{elemento.id}}">vinculos</a></td>
 
 											<script type="text/javascript">
 												documentos("che{{elemento.id}}","{{elemento.nro_exp}}","{{elemento.nro_doc}}","{{elemento.interesado}}","{{elemento.asunto}}","{{elemento.oficina.nombre}}","{{elemento.f_registro}}","{{elemento.id}}");
@@ -248,21 +253,6 @@ function archivar(a,b,c)
 									</table>
 								</div>
 							</form>
-							
-							<form action='/archivar/' method="POST"> {% csrf_token %}
-								<div id="modal2" style="display:none">
-									<div id="ventana2" class="contenedor" style="display:none">
-										 <h2>ARCHIVAR EXPEDIENTE</h2> 
-										 <a href="#close" title="Cerrar" onclick="cancelar('none','modal2','ventana2')">Close</a>
-										<div id="ventana3" class="contenedor1" style="display:none">
-										
-										</div>
-										<input type="submit" value="ARCHIVAR"></input>
-										<input type="button" value="CANCELAR" onclick=cancelar("none","modal2","ventana2")></input>
-									</div>
-								</div>
-							</form>
-							
 						</div>						
 				</center>
 			</div>

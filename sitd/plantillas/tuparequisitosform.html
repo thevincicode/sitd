@@ -6,19 +6,24 @@ var doc_derivar=new Array();
 
 function imprSelec()
 				{
+					//document.noimprimir.btnImprimir.style.visibility='hidden';
 					var ficha=document.getElementById("Cavesera");
 					var ubicacion=document.getElementById("APanelDerecho");
-					var imprimirr=document.getElementById("imprimir");
+					//var detalle=document.getElementById("MostrarDatosExpedientes"); btnImprimir
+					var imprimirr=document.getElementById("DatosRecibirEnOficina");
 					//ficha.innerHTML += imprimirr;
 					var ventimp=window.open(' ','popimpr');
 					ventimp.document.write(ficha.innerHTML);
 					ventimp.document.write(ubicacion.innerHTML);
-					ventimp.document.write(imprimirr.innerHTML);
+					//ventimp.document.write(detalle.innerHTML);
+					ventimp.document.write(imprimirr.innerHTML);					
 					ventimp.document.close();
 					ventimp.print();
 					ventimp.close();
+					//document.noimprimir.btnImprimir.style.visibility='visible';
 				}
 </script>
+
   	<head>
 	<title>Bandeja-Tramite documentario</title>
 	<meta charset='utf-8'>
@@ -57,9 +62,9 @@ function imprSelec()
 								   <p class="SMenus">Codigo y/o Interesado</p>
 								   <br>
 								   <input type="text" name="b" id="b"></input>
-								   <input type="submit" value="BUSCAR" class="Sbutton"></input>
+								   <input type="submit" value="BUSCAR"></input>
 								</div>
-							</form>                   
+							</form>                 
 						</div>
 					</center>
 				</div>
@@ -67,51 +72,19 @@ function imprSelec()
 			<div id="PanelDerecho">
 				<center>
 						 <div id="APanelDerecho">
-							 <p class="Menus">BUSCAR EXPEDIENTE</p>
+							 <p class="Menus">DETALLE EXPEDIENTE</p>
 						 </div>
 						 <div id="BPanelDerecho">
 							<div id = "MenusOficina">
-								 <a href="" class ="Sbutton" onclick="imprSelec()">Imprimir</a>  
+						    	<a href="" class ="Sbutton" onclick="imprSelec()">Imprimir</a> 
 							</div>
-							
-							<form name="datos" method="get">
-								<div id="imprimir">
-									<table>
-										<tr>
-											<th scope="col">Numero</th>
-											<th scope="col">Codigo Expediente</th>
-											<th scope="col">Presentado por</th>
-											<th scope="col">Asunto</th>
-											<th scope="col">Destino</th>
-											<th scope="col">Fecha</th>
-											<th scope="col">Detalles</th>
-										</tr>
-										
-										{% for elemento in lista %}
-										<tr>
-											<td>{{elemento.nro_exp}}</td>
-											<td>{{elemento.nro_doc}}</td>
-											<td>{{elemento.interesado}}</td>
-											<td>{{elemento.asunto}}</td>
-											<td>{{elemento.oficina.nombre}}</td>	    	
-											<td>{{elemento.f_registro}}</td>
-											<td><a href="/expediente/{{elemento.id}}">Detalles</a></td>
-
-											<script type="text/javascript">
-												documentos("che{{elemento.id}}","{{elemento.nro_exp}}","{{elemento.nro_doc}}","{{elemento.interesado}}","{{elemento.asunto}}","{{elemento.oficina.nombre}}","{{elemento.f_registro}}","{{elemento.id}}");
-											</script>
-										</tr>
-										{% endfor %}
-									</table>
-								</div>
-							</form>
-							
+							<form id="formulario" method="POST" action=''>{% csrf_token %}
+								{{formulario.as_p}}
+								<p><input type="submit" value="Guardar"></p>
+			               </form>
 						</div>						
 				</center>
 			</div>
-			<div id="Copirigh">
-				Copyright Sigmadelsur © 2013 Todos Los Derechos Reservados
-			</div>	
 		</center>
 	</body>
 </html>

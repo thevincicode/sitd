@@ -106,7 +106,7 @@ class Expediente(models.Model):
 	tipo=models.ForeignKey(ExpedienteTipo)
 	tupa=models.ForeignKey(Tupa)
 	oficina=models.ForeignKey(Oficina)
-	nota=models.TextField(max_length=150)
+	archivomotivo=models.TextField(max_length=1500)
 
 	def __unicode__(self):
 			return self.nro_doc
@@ -121,7 +121,7 @@ class Proveido(models.Model):
 class Derivar(models.Model):
 	GENDER_CHOICES = (
         ('E', 'Enviado'),
-        ('R', 'Recivido'),
+        ('R', 'Recibido'),
         ('A', 'Archivado'),
     )
 	fecha=models.DateTimeField()
@@ -135,7 +135,6 @@ class DerivarDetalle(models.Model):
 	expediente=models.ForeignKey(Expediente)
 	derivar=models.ForeignKey(Derivar)
 
-
 class ExpedienteHistorial(models.Model):
 	f_salida=models.DateTimeField(verbose_name=u'Fecha de Salida')
 	o_origen=models.CharField(max_length=50, verbose_name=u'Oficina de origen')
@@ -146,3 +145,11 @@ class ExpedienteHistorial(models.Model):
 	expediente=models.ForeignKey(Expediente)
 	ubicacion=models.CharField(max_length=150)
 	comentario=models.TextField(max_length=1000, verbose_name=u'Comentario',help_text='maximo 1000 caracteres')
+
+class Organizacion(models.Model):
+	nombre=models.CharField(max_length=500, verbose_name=u'Nombre de la Institucion')
+	logo=models.ImageField(upload_to='Imagen',verbose_name='Imagen logo')
+	direccion=models.CharField(max_length=850, verbose_name=u'direccion')
+
+	def __unicode__(self):
+			return self.nombre

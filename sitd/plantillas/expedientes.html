@@ -295,6 +295,18 @@ function archivar(a,b,c)
 				}
 </script>
 
+<script type="text/javascript" charset="utf-8">
+(function(){
+	('#menu2 li a').click(function(event){
+		var elem = (this).next();
+		if(elem.is('ul')){
+			event.preventDefault();
+			('#menu2 ul:visible').not(elem).slideUp();
+			elem.slideToggle();
+		}
+	});
+});
+</script>
   	<head>
 	<title>Bandeja-Tramite documentario</title>
 	<meta charset='utf-8'>
@@ -305,9 +317,11 @@ function archivar(a,b,c)
 		<center>
 			<div id="Contenedor">
 				<div id = "Cavesera">
-					  <h3 class = "Texto"><img src="{{ STATIC_URL }}Imagenes/logo.JPG" align="left">SISTEMA DE TRAMITE DOCUMENTARIO<BR>MUNICIPALIDAD PROVINCIAL DE GRAU </h3>
+					  <h3 class = "Texto"><img src='{{MEDIA_URL}}{{organizacion.logo}}' align="left"> SISTEMA DE TRAMITE DOCUMENTARIO<BR>
+					  	{{organizacion.nombre|title}}</h3>
 				</div>
 				<div id = "Info">
+					<h1 ><img src="{{ STATIC_URL }}Imagenes/usuario.png">usuario  <img src="{{ STATIC_URL }}Imagenes/oficina.png">oficina </h1>
 				</div>
 				<div id="PanelIzquierdo">
 					<center>
@@ -336,13 +350,38 @@ function archivar(a,b,c)
 								</div>
 							</form>                  
 						</div>
+						<div id="menuAdmin">
+							<ul class="menu2">
+							    <li><a href="#">INSTITUCION</a>
+							      <ul>
+							        <li><a href="/trabajadores">Trabajadores</a></li>
+							        <li><a href="/oficinas">Oficinas</a></li>
+							        <li><a href="/organizacion">Institucion</a></li>
+							      </ul>
+							    </li>
+							 
+							    <li><a href="#">TUPA</a>
+							      <ul>
+							        <li><a href="/tupa">Tupa</a></li>
+							        <li><a href="/tupa/requisitos">Requisitos</a></li>
+							      </ul>
+							    </li>
+							 
+							    <li><a href="#">EXPEDIENTE</a>
+							       <ul>
+							         <li><a href="/proveidos">Proveidos</a></li>
+							         <li><a href="/expediente/tipos">Tipos</a></li>
+							      </ul>
+							   	</li>
+							</ul>
+						</div>
 					</center>
 				</div>
 			</div>
 			<div id="PanelDerecho">
 				<center>
 						 <div id="APanelDerecho">
-							 <p class="Menus">Expedientes en mi Oficina</p>
+							 <p class="Menus">Expedientes en mi Oficina, hora: {{fecha}}</p>
 						 </div>
 						 <div id="BPanelDerecho">
 							<div id = "MenusOficina">
@@ -398,7 +437,8 @@ function archivar(a,b,c)
 										</div><br>
 										Comentario
 										<div id="ventanaC">
-											<textarea id="comentario" style="margin: 2px; width: 500px; height: 60px;"></textarea>
+											<textarea id="" name="comentarioA" rows="5" cols="30"></textarea>
+											
 										</div>
 										<input type="submit" value="DERIVAR"></input>
 										<input type="button" value="CANCELAR" onclick=cancelar("none","modal","ventana")></input>
@@ -415,7 +455,7 @@ function archivar(a,b,c)
 										</div><br>
 										Comentario
 										<div id="ventanaC">
-											<textarea id="comentario" style="margin: 2px; width: 500px; height: 60px;"></textarea>
+											<textarea id="comentarioA" name="comentarioA" style="margin: 2px; width: 500px; height: 60px;"></textarea>
 										</div>
 										<input type="submit" value="ARCHIVAR"></input>
 										<input type="button" value="CANCELAR" onclick=cancelar("none","modal2","ventana2")></input>

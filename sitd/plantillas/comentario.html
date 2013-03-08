@@ -36,7 +36,7 @@ function imprSelec()
 		<center>
 			<div id="Contenedor">
 				<div id = "Cavesera">
-					 <h3 class = "Texto"><img src='{{MEDIA_URL}}{{organizacion.logo}}' align="left"> SISTEMA DE TRAMITE DOCUMENTARIO<BR>
+					  <h3 class = "Texto"><img src='{{MEDIA_URL}}{{organizacion.logo}}' align="left"> SISTEMA DE TRAMITE DOCUMENTARIO<BR>
 					  	{{organizacion.nombre|title}}</h3>
 				</div>
 				<div id = "Info">
@@ -143,7 +143,17 @@ function imprSelec()
 				                            <td>
 				                               {{expediente.f_registro}}
 				                            </td>
-				                            <td class="TextoFormulario">
+				                            <td>
+				                            </td>
+				                            <td>
+				                            </td>
+				                            <td>
+				                            </td>
+				                            <td>
+				                            </td>
+				                         </tr>
+				                         <tr>
+				                             <td class="TextoFormulario">
 				                               Tiempo Aprox: 
 				                            </td>
 				                            <td>
@@ -153,41 +163,15 @@ function imprSelec()
 				                            </td>
 				                            <td>
 				                            </td>
-				                         </tr>
-				                         <tr>
-				                             <td class="TextoFormulario">
-				                               Motivo de Archivo: 
+				                            <td>
 				                            </td>
 				                            <td>
-				                               {{expediente.archivomotivo}}
 				                            </td>
-				                            
 				                         </tr>
 				                      </table>
 				                   </div>
 				                   <div id="MostrarDatosExpedientesMas">
-				                      <table border ="0" class="table" width="700" height="30">
-				                            <tr>
-									    		<th class="TextoFormulario" scope="col">Ofina Origen</th>
-									    		<th class="TextoFormulario" scope="col">Fecha Salida</th>
-									    		<th class="TextoFormulario" scope="col">Ofina Destino</th>
-									    		<th class="TextoFormulario" scope="col">Proveido</th>
-									    		<th class="TextoFormulario" scope="col">Estado</th>
-									    		<th class="TextoFormulario" scope="col">Fecha Recep/ hora</th>
-									    		<th class="TextoFormulario" scope="col">Comentario</th>
-									    	</tr>
-				                          	{% for histo in historial %}
-											<tr>
-												<td>{{histo.o_origen}}</td>
-												<td>{{histo.f_salida}}</td>
-												<td>{{histo.o_destino}}</td>
-										    	<td>{{histo.proveido}}</td>
-												<td>{{histo.estado}}</td>	    	
-										    	<td>{{histo.f_recepcion}}</td>
-										    	<td><a href="/expediente/{{expediente.id}}/comentario/{{histo.id}}">comentario</a></td>
-											</tr>
-											{% endfor %}
-				                      </table>
+								    	{{historial.comentario}}
 				                   </div>				                   
 				               </div>
 			               </form>

@@ -3,31 +3,7 @@
 <script lenguage="javascript">
 var doc=new Array();
 var doc_derivar=new Array();
-
-function activar(){
-				if(document.marcar.mTodos.checked==true)
-				{
-					for (i=0;i<document.datos.elements.length;i++)
-					{
-						if(document.datos.elements[i].type == "checkbox")	
-				           document.datos.elements[i].checked=1; 
-					}
-					//document.datos.Todos.checked=true;
-					
-				}
-				else
-				{
-					for (i=0;i<document.datos.elements.length;i++) 
-						{
-				    	if(document.datos.elements[i].type == "checkbox")	
-				           document.datos.elements[i].checked=0;
-				       }
-				       document.marcar.mTodos.checked=false;
-				}
-			}
-
-
-function recibir(a,b,c)
+function toogle(a,b,c)
 				{
 				 // document.getElementById(b).style.display=a;
 				  //document.getElementById(c).style.display=a;
@@ -54,10 +30,6 @@ function recibir(a,b,c)
 					  		doc_derivar[long_der][1]=doc[i][1];
 					  		doc_derivar[long_der][2]=doc[i][2];
 					  		doc_derivar[long_der][3]=doc[i][3];
-					  		doc_derivar[long_der][4]=doc[i][4];
-					  		doc_derivar[long_der][5]=doc[i][5];
-					  		doc_derivar[long_der][6]=doc[i][6];
-					  		doc_derivar[long_der][7]=doc[i][7];
 					  	}	
 				  }
 
@@ -72,9 +44,10 @@ function recibir(a,b,c)
 				  			document.getElementById("ventana1").innerHTML="";
 
 				  			var contenedor = document.getElementById('ventana1'); 
-							var nuevodiv = '';
+							var nuevodiv = '<div>Procedimiento(TUPA): {{tupa.denominacion}}</div> ';
 				 			contenedor.innerHTML += nuevodiv;							
-							nuevodiv='';
+							nuevodiv='<td><input type="hidden" name="hi" id="' +{{tupa.id}}+ '" value="' +{{tupa.id}}+'"/></td>';
+							contenedor.innerHTML += nuevodiv;
 							var tabla=new Array();
 							var tmp='';
 						  	for(i=0;i<doc_derivar.length;i++)
@@ -83,22 +56,17 @@ function recibir(a,b,c)
 						  		tabla[i]='';
 						  		tmp='<tr>';
 						  		tabla[i] += tmp;
-						  		tmp='<td><input type="hidden" name="hi" id="hi' +doc_derivar[i][7]+ '" value="' +doc_derivar[i][7]+'"/></td>';
-						  		tabla[i] += tmp;
-						  		for(j=0;j<8;j++)
+						  		for(j=0;j<2;j++)
 						  		{
-						  			if(j<7)
+						  			if(j==0)
 						  			{
-						  				if(j>0)
-						  				{
-							  				tmp='<td>' + doc_derivar[i][j] + '</td>';
-							  				tabla[i] += tmp;	
-						  				}
+						  				tmp='<td><input type="hidden" name="che" value="' +doc_derivar[i][0]+'"</td>';
+					  					tabla[i] += tmp;		
 						  			}
 						  			else
 						  			{
-						  				tmp='<td>' + '<a href="/expediente/'+doc_derivar[i][j]+'">Detalles</a>' + '</td>';
-						  				tabla[i] += tmp;
+						  				tmp='<td>' + doc_derivar[i][j] + '</td>';
+						  				tabla[i] += tmp;	
 						  			}
 						  		}						  		
 						  		tmp='</tr>'
@@ -122,82 +90,45 @@ function recibir(a,b,c)
 				  }
 				}
 
-function documentos(a,b,c,d,e,f,g,h)
+function documentos(a,b,c,d)
 				{
 					var long = doc.length;
 					//alert("el tamanio inicial es "+long);
 				
-					doc[long]=new Array(8);
+					doc[long]=new Array(4);
 				
     				doc[long][0]=a;//checkbox
     				doc[long][1]=b;//nro expediente
     				doc[long][2]=c;//nro documento
     				doc[long][3]=d;//interesado
-    				doc[long][4]=e;//asunto
-    				doc[long][5]=f;//oficina
-    				doc[long][6]=g;//fecha
-    				doc[long][7]=h;//iddocumento
 				}
+
+function imprSelec()
+				{
+					//document.noimprimir.btnImprimir.style.visibility='hidden';
+					var ficha=document.getElementById("Cavesera");
+					var ubicacion=document.getElementById("APanelDerecho");
+					//var detalle=document.getElementById("MostrarDatosExpedientes"); btnImprimir
+					var imprimirr=document.getElementById("DatosRecibirEnOficina");
+					//ficha.innerHTML += imprimirr;
+					var ventimp=window.open(' ','popimpr');
+					ventimp.document.write(ficha.innerHTML);
+					ventimp.document.write(ubicacion.innerHTML);
+					//ventimp.document.write(detalle.innerHTML);
+					ventimp.document.write(imprimirr.innerHTML);					
+					ventimp.document.close();
+					ventimp.print();
+					ventimp.close();
+					//document.noimprimir.btnImprimir.style.visibility='visible';
+				}
+
 function cancelar(a,b,c)
 				{
 				  document.getElementById(b).style.display=a;
 				  document.getElementById(c).style.display=a;
 				  document.getElementById("ventana1").style.display=a;
-				  
+				 
 				}
-function imprimir(theForm)
-				{
-				var i; 
-					//for(i=0; i<theForm.elements.length ; i++) 
-					for (i=0;i<document.datos.elements.length;i++) 
-					{ 
-						// Agregar en esta lista de condiciones 
-						// todos aquellos tipos de Input que se quieren ocultar 
-						if( (theForm.elements[i].type == "submit") || 
-						(theForm.elements[i].type == "a") || 
-						(theForm.elements[i].type == "checkbox") ) 
-						theForm.elements[i].style.visibility = 'hidden'; 
-					document.all.item("PanelIzquierdo").style.visibility='hidden';
-					document.all.item("MenusOficina").style.visibility='hidden';
-					} 
-					window.print(); 
-
-					for(i=0; i<theForm.elements.length ; i++) 
-					{ 
-						if( (theForm.elements[i].type == "submit") || 
-						(theForm.elements[i].type == "reset") || 
-						(theForm.elements[i].type == "button") ) 
-						theForm.elements[i].style.visibility = 'visible'; 
-					document.all.item("noprint").style.visibility='visible';
-					document.all.item("MenusOficina").style.visibility='visible';
-					} 	
-				}
-function imprSelec()
-				{
-					for (i=0;i<document.datos.elements.length;i++)
-					{
-						if(document.datos.elements[i].type == "checkbox")	
-				           document.datos.elements[i].style.visibility='hidden';
-					}
-					var ficha=document.getElementById("Cavesera");
-					var ubicacion=document.getElementById("APanelDerecho");
-					var imprimirr=document.getElementById("imprimir");
-					//ficha.innerHTML += imprimirr;
-					var ventimp=window.open(' ','popimpr');
-					ventimp.document.write(ficha.innerHTML);
-					ventimp.document.write(ubicacion.innerHTML);
-					ventimp.document.write(imprimirr.innerHTML);					
-					ventimp.document.close();
-					ventimp.print();
-					ventimp.close();
-					for (i=0;i<document.datos.elements.length;i++)
-					{
-						if(document.datos.elements[i].type == "checkbox")	
-				           document.datos.elements[i].style.visibility='visible';
-					}
-				}
-
-
 </script>
 
   	<head>
@@ -238,7 +169,7 @@ function imprSelec()
 								   <p class="SMenus">Codigo y/o Interesado</p>
 								   <br>
 								   <input type="text" name="b" id="b"></input>
-								   <input type="submit" value="BUSCAR" class="Sbutton"></input>
+								   <input type="submit" value="BUSCAR"></input>
 								</div>
 							</form>                 
 						</div>
@@ -248,70 +179,64 @@ function imprSelec()
 			<div id="PanelDerecho">
 				<center>
 						 <div id="APanelDerecho">
-							 <p class="Menus">EXPEDIENTES POR RECIBIR</p>
+							 <p class="Menus">DETALLE EXPEDIENTE</p>
 						 </div>
 						 <div id="BPanelDerecho">
 							<div id = "MenusOficina">
-								 <form name="marcar"> 
-								 <input type="checkbox" name="mTodos" OnClick="activar()">
-								 <input type="button" value="RECIBIR" class="Sbutton" onclick="recibir('block','modal','ventana')"></input>
-								 <input type="button" value="IMPRIMIR" class="Sbutton" onclick="imprSelec()"></input>  
-								</form>
+								<a href="#" class ="Sbutton" onclick="toogle('block','modal','ventana')">Vincular</a>
+						    	<a href="" class ="Sbutton" onclick="imprSelec()">Imprimir</a> 
 							</div>
-							
-							<form name="datos" method="get">
-								<div id="imprimir">
-									<table>
-										<tr>
-											<th scope="col"></th>
-											<th scope="col">Numero</th>
-											<th scope="col">Codigo Expediente</th>
-											<th scope="col">Presentado por</th>
-											<th scope="col">Asunto</th>
-											<th scope="col">Destino</th>
-											<th scope="col">Fecha</th>
-											<th scope="col">Detalles</th>
-										</tr>
-										
-										{% for elemento in lista %}
-										<tr>
-											<td><input type="checkbox" name="che" id="che{{elemento.id}}"><br></td>
-											<td>{{elemento.nro_exp}}</td>
-											<td>{{elemento.nro_doc}}</td>
-											<td>{{elemento.interesado}}</td>
-											<td>{{elemento.asunto}}</td>
-											<td>{{elemento.oficina.nombre}}</td>	    	
-											<td>{{elemento.f_registro}}</td>
-											<td><a href="/expediente/{{elemento.id}}">Detalles</a></td>
+							<form id="noimprimir" method="GET">
+								<div id="DatosRecibirEnOficina">
+				                   <div id="MostrarDatosExpedientes">
+				                      <table border="0" class="table" width="700" height="143">
+				                         <tr>
+				                            <td class="TextoFormulario">
+				                               Denominacion: 
+				                            </td>
+				                            <td>
+				                               {{tupa.denominacion}}
+				                            </td>				                            
+				                         </tr>  
+				                      </table>
+				                   </div>
+				                   <div id="MostrarDatosExpedientesMas">
+				                      <table border ="0" class="table" width="700" height="30">
+				                            <tr>
+									    		<th class="TextoFormulario" scope="col"></th>
+									    		<th scope="col">Requisito</th>
+									    	</tr>
+				                          	{% for requi in requisitos %}
+											<tr>
+												<td><input type="checkbox" id="{{requi.id}}" name="che"> </td>
+												<td>{{requi.requisito}}</td>												
+											</tr>
 
 											<script type="text/javascript">
-												documentos("che{{elemento.id}}","{{elemento.nro_exp}}","{{elemento.nro_doc}}","{{elemento.interesado}}","{{elemento.asunto}}","{{elemento.oficina.nombre}}","{{elemento.f_registro}}","{{elemento.id}}");
+												documentos("{{requi.id}}","{{requi.requisito}}","{{tupa.id}}","{{tupa.denominacion}}");
 											</script>
-										</tr>
-										{% endfor %}
-									</table>
-								</div>
-							</form>
-							<form action='/recibir/' method="POST"> {% csrf_token %}
+											{% endfor %}
+				                      </table>
+				                   </div>				                   
+				               </div>
+			               </form>
+			               <form action='/tupa/vincular/editarguardar' method="POST"> {% csrf_token %}
 								<div id="modal" style="display:none">
 									<div id="ventana" class="contenedor" style="display:none">
-										 <h2>RECIBIR EXPEDIENTE</h2> 
+										 <h2>DERIVAR EXPEDIENTE</h2> 
 										 <a href="#close" title="Cerrar" onclick="cancelar('none','modal','ventana')">Close</a>
+										 <input type="hidden" id="{{tupa.id}}" name="tupa" value="{{tupa.id}}">
 										<div id="ventana1" class="contenedor1" style="display:none">
 										
 										</div>
-										<input type="submit" value="RECIBIR"></input>
+										<input type="submit" value="VINCULAR"></input>
 										<input type="button" value="CANCELAR" onclick=cancelar("none","modal","ventana")></input>
 									</div>
 								</div>
 							</form>	
-							
 						</div>						
 				</center>
 			</div>
-			<div id="Copirigh">
-				Copyright Sigmadelsur © 2013 Todos Los Derechos Reservados
-			</div>	
 		</center>
 	</body>
 </html>

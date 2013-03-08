@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang='es'>
 <script lenguage="javascript">
-var doc=new Array();
-var doc_derivar=new Array();
-
 function imprSelec()
 				{
 					var ficha=document.getElementById("Cavesera");
@@ -18,7 +15,9 @@ function imprSelec()
 					ventimp.print();
 					ventimp.close();
 				}
+
 </script>
+
   	<head>
 	<title>Bandeja-Tramite documentario</title>
 	<meta charset='utf-8'>
@@ -29,7 +28,7 @@ function imprSelec()
 		<center>
 			<div id="Contenedor">
 				<div id = "Cavesera">
-					 <h3 class = "Texto"><img src='{{MEDIA_URL}}{{organizacion.logo}}' align="left"> SISTEMA DE TRAMITE DOCUMENTARIO<BR>
+					  <h3 class = "Texto"><img src='{{MEDIA_URL}}{{organizacion.logo}}' align="left"> SISTEMA DE TRAMITE DOCUMENTARIO<BR>
 					  	{{organizacion.nombre|title}}</h3>
 				</div>
 				<div id = "Info">
@@ -67,45 +66,34 @@ function imprSelec()
 			<div id="PanelDerecho">
 				<center>
 						 <div id="APanelDerecho">
-							 <p class="Menus">BUSCAR EXPEDIENTE</p>
+							 <p class="Menus"> Tipos de Expedientes</p>
 						 </div>
 						 <div id="BPanelDerecho">
 							<div id = "MenusOficina">
+								<a href="/expediente/tipo/nuevo" class ="Sbutton">NUEVO</a>  
 								 <a href="" class ="Sbutton" onclick="imprSelec()">Imprimir</a>  
-							</div>
-							
+							</div>							
 							<form name="datos" method="get">
 								<div id="imprimir">
 									<table>
 										<tr>
-											<th scope="col">Numero</th>
-											<th scope="col">Codigo Expediente</th>
-											<th scope="col">Presentado por</th>
-											<th scope="col">Asunto</th>
-											<th scope="col">Destino</th>
-											<th scope="col">Fecha</th>
-											<th scope="col">Detalles</th>
+											<th scope="col">Requisito</th>
+											<th scope="col">Descripcion</th>
+											<th scope="col">Opciones</th>
+											<th scope="col"></th>
 										</tr>
 										
 										{% for elemento in lista %}
 										<tr>
-											<td>{{elemento.nro_exp}}</td>
-											<td>{{elemento.nro_doc}}</td>
-											<td>{{elemento.interesado}}</td>
-											<td>{{elemento.asunto}}</td>
-											<td>{{elemento.oficina.nombre}}</td>	    	
-											<td>{{elemento.f_registro}}</td>
-											<td><a href="/expediente/{{elemento.id}}">Detalles</a></td>
-
-											<script type="text/javascript">
-												documentos("che{{elemento.id}}","{{elemento.nro_exp}}","{{elemento.nro_doc}}","{{elemento.interesado}}","{{elemento.asunto}}","{{elemento.oficina.nombre}}","{{elemento.f_registro}}","{{elemento.id}}");
-											</script>
+											<td>{{elemento.nombre}}</td>
+											<td>{{elemento.descripcion}}</td>											
+											<td><a href="/expediente/tipo/editar/{{elemento.id}}">editar</a></td>
+											<td><a href="/expediente/tipo/eliminar/{{elemento.id}}">eliminar</a></td>	
 										</tr>
 										{% endfor %}
 									</table>
 								</div>
 							</form>
-							
 						</div>						
 				</center>
 			</div>
