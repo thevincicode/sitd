@@ -1,20 +1,109 @@
 <!DOCTYPE html>
 <html lang='es'>
-	<head>
-		<title>Registro De Nueva Oficina</title>
+  	<head>
+	<title>Registro De Nueva Oficina</title>
+	<meta charset='utf-8'>
 	</head>
 	<body>
-		<header>
-			<h2>Registro De Nueva Oficina</h2>
-		</header>
-		<section>
-			<form action='/OficinaNuevo/' method='POST'>
-				{% csrf_token %}
-				Nombre:{{ Form.Nombre }}<br>
-				Descripcion:{{ Form.Descripcion }}
-				<input type='submit' value='Ingresar'>
-				{{ Info }}
-			</form>	
-		</section>
+	  	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/modal.css">
+	  	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/estilo.css">
+		<center>
+			<div id="Contenedor">
+				<div id = "Cavesera">
+					  <h3 class = "Texto"><img src='{{MEDIA_URL}}{{organizacion.logo}}' align="left"> SISTEMA DE TRAMITE DOCUMENTARIO<BR>
+					  	{{organizacion.nombre|title}}</h3>
+				</div>
+				<div id = "Info">
+					<h4>
+						<img src="{{ STATIC_URL }}Imagenes/usuario.png">{{NombreUsuario}}      <img src="{{ STATIC_URL }}Imagenes/oficina.png">{{NombreOficina}}
+						<a href="/LogueoSalir">    
+							<ACRONYM title=" Salir del sistema"><img src="{{ STATIC_URL }}Imagenes/logout.png"></ACRONYM>
+						</a>
+					</h4>
+				</div>
+				<div id="PanelIzquierdo">
+					<center>
+						<div id="ContenedorMenu">
+							 <p class="Menus">Opciones </p>
+						</div>             
+						<div id="Opciones"><br>
+							<a href="/expediente/nuevo" class="button">Nuevo</a>
+							<br>
+							<div id = "Expedientes">
+							   <p class="SMenus">EXPEDIENTES</p>
+							   <a href="/" class="Sbutton">En Oficina</a><br><br>
+							   <a href="/bandeja" class="Sbutton">Por Llegar</a><br><br>
+							   <a href="/archivados" class="Sbutton">Archivados</a><br><br>
+							</div>
+							<div id="Reportes">
+							   <p class="SMenus">Reportes</p>
+							   <a href="/reportes/" class="Sbutton">Reportes</a>
+							</div> 
+							<form action='/buscar/' name="buscar" method="GET">
+								<div>
+								   <p class="SMenus">Codigo y/o Interesado</p>
+								   <br>
+								   <input type="text" name="b" id="b"></input>
+								   <input type="submit" value="BUSCAR" class="Sbutton"></input>
+								</div>
+							</form>                   
+						</div>
+					</center>
+				</div>
+			</div>
+			<div id="PanelDerecho">
+				<center>
+						 <div id="APanelDerecho">
+							 <p class="Menus">Registro De Nueva Oficina</p>
+						 </div>
+						 <div id="BPanelDerecho">
+							<div id = "MenusOficina">
+							</div>
+							<table border="0">
+							<form action='/OficinaNuevo/' method='POST'>
+								{% csrf_token %}
+								<tr>
+								   <td class="TextoFormulario2">								
+								      Nombre:
+								   </td>								    
+								</tr>
+								<tr>
+									<td>
+								      {{ Form.Nombre }}
+								    </td>
+								</tr>					    
+								 
+								 <tr>	
+								      <td class="TextoFormulario2">							 	
+								          Descripcion:
+								       </td>
+								  </tr>  
+								  <tr> 
+								  	   <td>
+								          {{ Form.Descripcion }}
+								       </td>
+								 </tr>
+								 <tr>
+								 	 <td>
+								       <input type='submit' value='Ingresar' class="Sbutton">
+								     </td>
+								 </tr> 
+								 <tr>
+								 	 <td>
+								       {{ Info }}
+								     </td>
+								    
+								  </tr>
+							</form>
+						</table>
+						</div>						
+				</center>
+			</div>
+			<div id="Copirigh">
+				
+				Copyright <a href="http://www.sigmadelsur.com">Sigmadelsur</a> © 2013 Todos Los Derechos Reservados
+			
+			</div>	
+		</center>
 	</body>
 </html>

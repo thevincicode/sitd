@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang='es'>
+<script lenguage="javascript" type="text/javascript">
+function fechas(x)
+	{
+		switch(x)
+		{
+			case 0:
+				document.marcar.fecha1.style.visibility='hidden';
+				document.marcar.fecha2.style.visibility='hidden';
+				break;
+
+			case 1:
+				document.marcar.fecha1.style.visibility='visible';
+				document.marcar.fecha2.style.visibility='visible';
+				break;
+		}
+	}
+
+</script>
+
+  	<head>
+	<title>Bandeja-Tramite documentario</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/calendar.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/calendar-setup.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/calendar-es.js"></script>
+    <style type="text/css"> @import url("{{ STATIC_URL }}css/calendar-win2k-cold-1.css"); </style>
+	</head>
+	<body>
+	  	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/modal.css">
+	  	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/estilo.css">
+
+		<center>
+			<div id="Contenedor">
+				<div id = "Cavesera">
+					  <h3 class = "Texto"><img src='{{MEDIA_URL}}{{organizacion.logo}}' align="left"> SISTEMA DE TRAMITE DOCUMENTARIO<BR>
+					  	{{organizacion.nombre|title}}</h3>
+				</div>
+				<div id = "Info">
+					<h4>
+						<img src="{{ STATIC_URL }}Imagenes/usuario.png">{{NombreUsuario}}      <img src="{{ STATIC_URL }}Imagenes/oficina.png">{{NombreOficina}}
+						<a href="/LogueoSalir">    
+							<ACRONYM title=" Salir del sistema"><img src="{{ STATIC_URL }}Imagenes/logout.png"></ACRONYM>
+						</a>
+					</h4>
+				</div>
+				<div id="PanelIzquierdo">
+					<center>
+						<div id="ContenedorMenu">
+							 <p class="Menus">Opciones </p>
+						</div>             
+						<div id="Opciones"><br>
+							<a href="/expediente/nuevo" class="button">Nuevo</a>
+							<br>
+							<div id = "Expedientes">
+							   <p class="SMenus">EXPEDIENTES</p>
+							   <a href="/" class="Sbutton">En Oficina</a><br><br>
+							   <a href="/bandeja" class="Sbutton">Por Llegar</a><br><br>
+							   <a href="/archivados" class="Sbutton">Archivados</a><br><br>
+							</div>
+							<div id="Reportes">
+							   <p class="SMenus">Reportes</p>
+							   <a href="/reportes/" class="Sbutton">Reportes</a>
+							</div> 
+							<form action='/buscar/' name="buscar" method="GET">
+								<div>
+								   <p class="SMenus">Codigo y/o Interesado</p>
+								   <br>
+								   <input type="text" name="b" id="b"></input>
+								   <input type="submit" value="BUSCAR" class="Sbutton"></input>
+								</div>
+							</form>                  
+						</div>
+						<div id="menuAdmin">
+							<ul class="menu2">
+							    <li><a href="#">INSTITUCION</a>
+							      <ul>
+							        <li><a href="/TrabajadorControl">Trabajadores</a></li>
+							        <li><a href="/OficinaControl">Oficinas</a></li>
+							        <li><a href="/organizacion">Institucion</a></li>
+							      </ul>
+							    </li>
+							 
+							    <li><a href="#">TUPA</a>
+							      <ul>
+							        <li><a href="/tupa">Tupa</a></li>
+							        <li><a href="/tupa/requisitos">Requisitos</a></li>
+							      </ul>
+							    </li>
+							 
+							    <li><a href="#">EXPEDIENTE</a>
+							       <ul>
+							         <li><a href="/proveidos">Proveidos</a></li>
+							         <li><a href="/expediente/tipos">Tipos</a></li>
+							      </ul>
+							   	</li>
+							</ul>
+						</div>
+					</center>
+				</div>
+			</div>
+			<div id="PanelDerecho">
+				<center>
+						 <div id="APanelDerecho">
+							 <p class="Menus">REPORTES, Fecha: {{fecha}}</p>
+						 </div>
+						 <div id="BPanelDerecho">
+							<div id = "MenusOficina">
+								 <form name="marcar" action="/reporte/" method="GET"> 
+									 <select name="opcion" id="opcion">
+									 	<option value="1"> Documentos Recibidos </option>
+									 	<option value="2"> Documentos Derivados </option>
+									 	<option value="3"> Documentos Archivados </option>
+									 	<option value="4"> Total Recaudado  </option>
+									 </select>
+									 <select name="intervalo" id="intervalo" onClick='fechas(this.selectedIndex)'>
+									 	<option value="1"> Hoy </option>
+									 	<option value="2"> Entre Fechas </option>
+									 </select><br>
+									 <div name="fechas" id="fechas">
+									 	<table>
+									 		<tr>
+									 			<th scope="col">Desde</th>
+									 			<th scope="col">Hasta</th>
+									 		</tr>
+									 		<tr>
+									 			<td><input type="text" name="fecha1" id="fecha1" style='visibility:hidden'/></td>
+									 			<script type="text/javascript">
+										            Calendar.setup({
+										              inputField    : "fecha1",
+										              button        : "fecha1",
+										              ifFormat:   "%d/%m/%Y",
+										              align         : "Tr"
+										            });
+										        </script>
+									 			<td><input type="text" name="fecha2" id="fecha2" style='visibility:hidden'></input></td>
+									 			<script type="text/javascript">
+										            Calendar.setup({
+										              inputField    : "fecha2",
+										              button        : "fecha2",
+										              ifFormat:   "%d/%m/%Y",
+										              weekNumbers: "false"
+
+										            });
+										        </script>
+									 		</tr>
+									 	</table>
+									</div>
+									 <div>
+									 	<input type="submit" value="VER" class="Sbutton"></input>
+									 </div>
+								 </form> 
+							</div>
+						</div>
+				</center>
+			</div>
+			<div id="Copirigh">
+				Copyright <a href="http://www.sigmadelsur.com">Sigmadelsur</a> © 2013 Todos Los Derechos Reservados
+			</div>
+		</center>
+	</body>
+</html>

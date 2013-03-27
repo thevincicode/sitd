@@ -1,0 +1,83 @@
+#Contenedor
+{
+  width:1000px;
+  /*background-color: #EDEDED;*/ 
+}
+#Cavesera
+{
+   height: 50px;
+   width: 1000px;
+   background-color: #066A9B;
+}
+#Info
+{
+   height: 50px;
+   width: 1000px;
+   background-color: #ECECFF;
+}
+#CuerpoLogin
+{
+  height: 400px;
+  width: 1000px;
+  border: 3px #DCDCE6 solid;
+  margin-top: 0px;
+  border-radius: 8px;
+}
+#Logueo
+{
+  height: 170px;
+  width: 370px;
+  border: 3px #DCDCE6 solid;
+  margin-top: 120px;
+  border-radius: 8px;
+  background-color: #EDEDED;
+}
+
+.TextoLogin
+{
+   font-family: Helvetica;
+   font-size: 12pt;
+   text-align: right;
+   font-weight: bold;
+   
+}
+.TextoLogincavesera
+{
+   font-family: Helvetica;
+   font-size: 14pt;
+   
+}
+.TextoError
+{
+   font-family: Helvetica;
+   font-size: 14pt;
+   color: red;
+   text-align: center;
+   
+}
+
+/*Estilo Botones*/
+.button {
+  background: #DCDCE6; /* #384954;*/
+  background: -webkit-gradient(linear, left top, left bottom, from(white), to(white));
+  background: -moz-linear-gradient(top, white, white);
+  /*border-top: 1px solid red #96D1F8*/;
+  color: black;  /*Color de texto*/
+  font-size: 13px;
+  font-family: Helvetica, Arial, Sans-Serif;
+  padding: 10px 15px;
+  text-decoration: none;
+  vertical-align: middle; 
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+  -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+  box-shadow: rgba(0,0,0,1) 0 1px 0;
+  text-shadow: rgba(0,0,0,.4) 0 1px 0;
+}
+.button:hover {
+  background: #DCDCE6; /*#28597A;*/
+  /*border-top-color: #DCDCE6;*/
+  color: black;
+}

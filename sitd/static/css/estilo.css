@@ -92,6 +92,7 @@
    border: 1px #DCDCE6 solid;
    border-radius: 8px;
    margin-top: 1px;
+   overflow:autos
 }
 #FormNuevoExpediente
 {
@@ -355,16 +356,24 @@
    color: #0033CC;
    font-family: Calibri;
    font-size: 11pt;
-   text-align: ;
+   text-align: center;
+}
+.TextoFormulario2
+{
+   color: #0033CC;
+   font-family: Calibri;
+   font-size: 11pt;
+   text-align: left;
 }
 .TextoData
 {
    color: black;
    font-family: Calibri;
    font-size: 11pt;
+   text-align: center;
 }
 .table
 {
  margin-left: 0px;
- margin-top: 10px;
+ margin-top: 0px;
 }

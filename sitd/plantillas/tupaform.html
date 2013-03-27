@@ -38,6 +38,12 @@ function imprSelec()
 					  	{{organizacion.nombre|title}}</h3>
 				</div>
 				<div id = "Info">
+					<h4>
+						<img src="{{ STATIC_URL }}Imagenes/usuario.png">{{NombreUsuario}}      <img src="{{ STATIC_URL }}Imagenes/oficina.png">{{NombreOficina}}
+						<a href="/LogueoSalir">    
+							<ACRONYM title=" Salir del sistema"><img src="{{ STATIC_URL }}Imagenes/logout.png"></ACRONYM>
+						</a>
+					</h4>
 				</div>
 				<div id="PanelIzquierdo">
 					<center>
@@ -45,7 +51,7 @@ function imprSelec()
 							 <p class="Menus">Opciones </p>
 						</div>             
 						<div id="Opciones"><br>
-							<a href="NuevoExpediente.html" class="button">Nuevo</a>
+							<a href="/expediente/nuevo" class="button">Nuevo</a>
 							<br>
 							<div id = "Expedientes">
 							   <p class="SMenus">EXPEDIENTES</p>
@@ -55,7 +61,7 @@ function imprSelec()
 							</div>
 							<div id="Reportes">
 							   <p class="SMenus">Reportes</p>
-							   <a href="" class="Sbutton">Reportes</a>
+							   <a href="/reportes/" class="Sbutton">Reportes</a>
 							</div> 
 							<form action='/buscar/' name="buscar" method="GET">
 								<div>
@@ -82,6 +88,9 @@ function imprSelec()
 			               </form>
 						</div>						
 				</center>
+			</div>
+			<div id="Copirigh">
+				Copyright <a href="http://www.sigmadelsur.com">Sigmadelsur</a> © 2013 Todos Los Derechos Reservados
 			</div>
 		</center>
 	</body>

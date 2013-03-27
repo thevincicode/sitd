@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang='es'>
   	<head>
-	<title>Control de los trabajadores</title>
+	<title>Bandeja-Tramite documentario</title>
 	<meta charset='utf-8'>
 	</head>
 	<body>
@@ -10,7 +10,7 @@
 		<center>
 			<div id="Contenedor">
 				<div id = "Cavesera">
-					  <h3 class = "Texto"><img src='{{MEDIA_URL}}{{organizacion.logo}}' align="left"> SISTEMA DE TRAMITE DOCUMENTARIO<BR>
+					 <h3 class = "Texto"><img src='{{MEDIA_URL}}{{organizacion.logo}}' align="left"> SISTEMA DE TRAMITE DOCUMENTARIO<BR>
 					  	{{organizacion.nombre|title}}</h3>
 				</div>
 				<div id = "Info">
@@ -44,9 +44,9 @@
 								   <p class="SMenus">Codigo y/o Interesado</p>
 								   <br>
 								   <input type="text" name="b" id="b"></input>
-								   <input type="submit" value="BUSCAR" class="Sbutton"></input>
+								   <input type="submit" value="BUSCAR"></input>
 								</div>
-							</form>                   
+							</form>                 
 						</div>
 					</center>
 				</div>
@@ -54,43 +54,21 @@
 			<div id="PanelDerecho">
 				<center>
 						 <div id="APanelDerecho">
-							 <p class="Menus">Listado General De Los Trabajadores Registradas</p>
+							 <p class="Menus">Editar Oficina</p>
 						 </div>
 						 <div id="BPanelDerecho">
 							<div id = "MenusOficina">
-								<a href='/TrabajadorNuevo' class='button'>Nuevo</a>
 							</div>
-							{{ Info }}<br>
-							<form name='ListaTrabajador' method='GET'>
-								<table border="0" width="710">
-									<tr class="TextoFormulario">
-										<th scope="col">Dni</th>
-										<th scope="col">Nombres</th>
-										<th scope="col">Apellidos</th>
-										<th scope="col">Cargo</th>
-										<th scope="col">Oficina</th>
-										<th scope="col"></th>
-										<th scope="col"></th>
-									</tr>
-									{% for Item in Form %}
-									<tr class="TextoData">
-										<td>{{Item.dni}}</td>
-										<td>{{Item.nombre}}</td>
-										<td>{{Item.apellidos}}</td>
-										<td>{{Item.cargo}}</td>
-										<td>{{Item.oficina}}</td>
-										<td><a href='/TrabajadorEliminarDesicion/{{Item.id}}'>Eliminar</a></td>
-										<td><a href='/trabajador/editar/{{Item.id}}'>Modificar</a></td>
-									</tr>
-									{% endfor %}
-								</table>
-							</form>
+							<form id="formulario" method="POST" action=''>{% csrf_token %}
+								{{formulario.as_p}}
+								<p><input type="submit" value="Guardar"></p>
+			               </form>
 						</div>						
 				</center>
 			</div>
 			<div id="Copirigh">
 				Copyright <a href="http://www.sigmadelsur.com">Sigmadelsur</a> © 2013 Todos Los Derechos Reservados
-			</div>	
+			</div>
 		</center>
 	</body>
 </html>

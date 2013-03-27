@@ -1,16 +1,112 @@
+<!DOCTYPE html>
+<html lang='es'>
+<script type="text/javascript">
+var atupa=new Array();
+var avinculo=new Array();
+function ftupa(a,b,c,d,e,f,g)
+        {
+          var long = atupa.length;
+          atupa[long]=new Array(7);
+        
+            atupa[long][0]=a;//idtupa
+            atupa[long][1]=b;//denominacion
+            atupa[long][2]=c;//descripcion
+            atupa[long][3]=d;//autoridad
+            atupa[long][4]=e;//porcentaje
+            atupa[long][5]=f;//valor
+            atupa[long][6]=g;//tiempo
+        }
+
+function fvinculo(a,b,c)
+        {
+          var long = avinculo.length;
+          avinculo[long]=new Array(3);
+        
+            avinculo[long][0]=a;//idtupa
+            avinculo[long][1]=b;//idrequisito
+            avinculo[long][2]=c;//requisito
+        }
+
+function detalletupa()
+  {
+    id=document.getElementById('stupa').value;
+    for (t=0;t<atupa.length;t++)
+    {
+      if(atupa[t][0]==id)
+      {
+        document.getElementById("autoridad").innerHTML="";
+        var autor = document.getElementById('autoridad');
+        var nuevoaut = atupa[t][3];
+        autor.innerHTML += nuevoaut; 
+
+        //responsable
+        document.getElementById("responsable").innerHTML="";
+        var respon = document.getElementById('responsable'); 
+        var nuevorespon = '';
+        respon.innerHTML += nuevorespon;
+
+        //tiempo
+        document.getElementById("tiempo").innerHTML="";
+        var tiemp = document.getElementById('tiempo'); 
+        var nuevotiem = atupa[t][6];
+        tiempo.innerHTML += nuevotiem;
+
+        //uit
+        document.getElementById("uit").innerHTML="";
+        var ui = document.getElementById('uit'); 
+        var nuevoui = atupa[t][4];
+        ui.innerHTML += nuevoui;
+
+        //valor
+        document.getElementById("valor").innerHTML="";
+        var val = document.getElementById('valor'); 
+        var nuevoval = atupa[t][5];
+        val.innerHTML += nuevoval;
+
+        //fvencimiento
+        document.getElementById("fvencimiento").innerHTML="";
+        var fven = document.getElementById('fvencimiento'); 
+        var nuevofven = "calculando";
+        fven.innerHTML += nuevofven;
+        document.getElementById("lista").innerHTML="";
+        var contenedor = document.getElementById('lista'); 
+        var nuevodiv = '';
+        for(v=0;v<avinculo.length;v++)
+          {
+            if(avinculo[v][0]==id)
+            {
+              nuevodiv='<li>'+avinculo[v][2] + ' </li>'
+              contenedor.innerHTML += nuevodiv;
+            }
+          }
+      }
+    }    
+  }
+</script>
 <html>
    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/calendar.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/calendar-setup.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/calendar-es.js"></script>
+    <style type="text/css"> @import url("{{ STATIC_URL }}css/calendar-win2k-cold-1.css"); </style>
    </head>
    <body>
    <center>
-   <link href="estilo.css" rel="stylesheet" type="text/css">
+   <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/estilo.css">
       <div id="Contenedor">
           <div id = "Cavesera">
-              <h3 class = "Texto"><img src="Imagenes/logo.JPG" align="left">SISTEMA DE TRAMITE DOCUMENTARIO<BR>MUNICIPALIDAD PROVINCIAL DE GRAU </h3>
-              
+              <h3 class = "Texto"><img src='{{MEDIA_URL}}{{organizacion.logo}}' align="left"> SISTEMA DE TRAMITE DOCUMENTARIO<BR>
+              {{organizacion.nombre|title}}</h3>
           </div>
          
           <div id = "Info">
+            <h4>
+            <img src="{{ STATIC_URL }}Imagenes/usuario.png">{{NombreUsuario}}      <img src="{{ STATIC_URL }}Imagenes/oficina.png">{{NombreOficina}}
+            <a href="/LogueoSalir">    
+              <ACRONYM title=" Salir del sistema"><img src="{{ STATIC_URL }}Imagenes/logout.png"></ACRONYM>
+            </a>
+          </h4>
           </div>
           <div id="PanelIzquierdo">
              <center>
@@ -18,29 +114,33 @@
                  <p class="Menus">Opciones </p>
              <div>             
              <div id="Opciones"><br>
-                <a href="" class="button">Nuevo</a>
+                <a href="/expediente/nuevo" class="button">Nuevo</a>
                 <br>
                 <div id = "Expedientes">
-                   <p class="SMenus">Expedientes</p>
-                   <a href="EnOficina.html" class="Sbutton">En Oficina</a><br><br>
-                   <a href="PorLlegar.html" class="Sbutton">Por Llegar</a>
+                  <p class="SMenus">EXPEDIENTES</p>
+                  <a href="/" class="Sbutton">En Oficina</a><br><br>
+                  <a href="/bandeja" class="Sbutton">Por Llegar</a><br><br>
+                  <a href="/archivados" class="Sbutton">Archivados</a><br><br>
                    
                 </div>
                 <div id="Reportes">
                    <p class="SMenus">Reportes</p>
-                   <a href="" class="Sbutton">Reportes</a>
+                   <a href="/reportes/" class="Sbutton">Reportes</a>
                 </div> 
-                <div id="Buscar">
-                   <p class="SMenus">Codigo y/o Numero</p>
+                <form action='/buscar/' name="buscar" method="GET">
+                <div>
+                   <p class="SMenus">Codigo y/o Interesado</p>
                    <br>
-                   <br>
-                   <a href="" class="Sbutton">Buscar</a>
-                </div>                  
+                   <input type="text" name="b" id="b"></input>
+                   <input type="submit" value="BUSCAR" class="Sbutton"></input>
+                </div>
+                </form>                   
              </div>
              </center>
           </div>
           <div id="PanelDerecho">
           <center>
+            <form id="nuevo" action="/expediente/registrar" method="POST">{% csrf_token %}
              <div id="APanelDerecho">
                  <p class="Menus">Registro de nuevo expediente</p>
              </div>
@@ -50,28 +150,32 @@
                        <table border="0" class="table" width="710" height="185">
                           <tr>
                               <td class="TextoFormulario">
-                                 Numero:
+                                 Codigo:
                               </td>
                               <td>
-                                  Text Box
+                                  <input type="text" size="5" maxlength="" name="nro" id="nro" value="{{ultimonro}}"/>
                               </td>
                               <td class="TextoFormulario">
                                   Tipo de documento:
                               </td>
                               <td>
-                                   Text Box
+                                   <select id="tipos" name="tipos"> {% for tipos in tipo %}
+                                      <option value="{{tipos.id}}">{{tipos.nombre|capfirst}}
+                                      </option>
+                                      {% endfor %}
+                                   </select>
                               </td>
                               <td class="TextoFormulario">
-                                  Codigo expediente:
+                                  Nro. Doc:
                               </td>
                               <td>
-                                   Text Box
+                                  <input type="text" size="18" name="codigo" id="codigo"/>
                               </td>
                               <td class="TextoFormulario">
                                   Folios:
                               </td>
                               <td>
-                                    Text Box
+                                  <input type="text" size="2" name="folios" id="folios"/>
                               </td>
                               
                           </tr>
@@ -79,11 +183,7 @@
                               <td class="TextoFormulario">
                                   Solicitante:
                               </td>
-                              <td>
-                              </td>
-                              <td>
-                              </td>
-                              <td>
+                              <td >
                               </td>
                               <td>
                               </td>
@@ -92,27 +192,27 @@
                               <td>
                               </td>
                               <td class="TextoFormulario">
-                                  Inicio de Tramite
+                                Inicio de Tramite
+                              </td>
+                              <td>
+                              </td>
+                              <td>                                  
                               </td>
                           </tr>
                           <tr>
-                              <td>
-                                   Text Box
+                              <td colspan="5">
+                                   <input type="text" name="interesado" size="52" id="interesado"/>
                               </td>
-                              <td>
-                              </td>
-                              <td>
-                              </td>
-                              <td>
-                              </td>
-                              <td>
-                              </td>
-                              <td>
-                              </td> 
-                              <td>
-                              </td>
-                              <td>
-                                   Text Box
+                              <td colspan="3">
+                                   <input type="text" name="fechai" id="fechai" value="{{fechaserver}}"/>
+                                   <script type="text/javascript">
+                                        Calendar.setup({
+                                          inputField    : "fechai",
+                                          button        : "fechai",
+                                          ifFormat:   "%d/%m/%Y",
+                                          align         : "Tr"
+                                        });
+                                    </script>
                               </td>                       
                           </tr>
                           <tr>
@@ -127,32 +227,28 @@
                               </td>
                               <td>
                               </td>
-                              <td>
+                              <td class="TextoFormulario">
+                                Fecha Registro
                               </td> 
                               <td>
                               </td>
-                              <td class="TextoFormulario">
-                                   Fecha Registro
+                              <td>
                               </td>
                           </tr>
                           <tr>
-                              <td>
-                                   Text Box
+                              <td colspan="5">
+                                   <input type="text" size="52" name="asunto" id="asunto"/>
                               </td>
-                              <td>
-                              </td>
-                              <td>
-                              </td>
-                              <td>
-                              </td>
-                              <td>
-                              </td>
-                              <td>
-                              </td> 
-                              <td>
-                              </td>
-                              <td>
-                                   Text Box
+                              <td colspan="3">
+                                   <input type="text" name="fechar" id="fechar" value="{{fechaserver}}"/>
+                                   <script type="text/javascript">
+                                      Calendar.setup({
+                                        inputField    : "fechar",
+                                        button        : "fechar",
+                                        ifFormat:   "%d/%m/%Y",
+                                        align         : "Tr"
+                                      });
+                                  </script>
                               </td>
                           </tr>
                           <tr>
@@ -175,39 +271,32 @@
                               </td>
                           </tr>
                           <tr>
-                              <td>
-                                  Text Box 
-                              </td>
-                              <td>
-                              </td>
-                              <td>
-                              </td>
-                              <td>
-                              </td>
-                              <td>
-                              </td>
-                              <td>
-                              </td> 
-                              <td>
-                              </td>
-                              <td>                                   
+                              <td colspan="8">
+                                   <input type="text" size="52" name="destinatario" id="destinatario"/>
                               </td>
                           </tr>
                        </table>
                  </div>
                   <p class="SMenus">Texto Unico de Procedimiento administrativo</p>
-                 <div id="FormNuevoTupa">
+                 <div id="FormNuevoTupa">   
+                        Denominacion del Procedimiento:                    
+                         <select name="stupa" id="stupa" onclick="detalletupa()"> 
+                            {% for tupa in tupas %}
+                              <option value="{{tupa.id}}">{{tupa.denominacion|capfirst}}
+                              </option>                          
+                              <script type="text/javascript">
+                                ftupa("{{tupa.id}}","{{tupa.denominacion}}","{{tupa.descripcion}}","{{tupa.autoridad}}","{{tupa.porcentaje}}","{{tupa.valor}}","{{tupa.tiempo}}");
+                              </script>
+                            {% endfor %}
+                          </select><br>
+                             {% for vinc in tupavinculo %}
+                                <script type="text/javascript">
+                                  fvinculo("{{vinc.tupa.id}}","{{vinc.requisitos.id}}","{{vinc.requisitos.requisito}}");
+                                </script>
+                             {% endfor %}
+                    <div id="escribir" name="escribir">          
                        <table border="0" class="table" width="710" height="227">
                            <tr>
-                                <td class="TextoFormulario">
-                                    Denominacion del Procedimiento:
-                                </td>
-                                <td>
-                                     Text Box
-                                </td>
-                                <td>
-                                </td>
-                           </tr>
                                 <td class="TextoFormulario">
                                      Autoridad quien aprueba el tramite:
                                 </td>
@@ -216,71 +305,78 @@
                                 </td>
                                 <td>
                                 </td>
+                           </tr>
                            <tr>
-                                <td>
-                                     text Box
+                                <td id="autoridad" name="autoridad">
+                                    
                                 </td>
-                                <td>
-                                     text Box
+                                <td id="responsable" name="responsable">
+                                     responsable
                                 </td>
-                                <td>
+                                <td >
                                 </td>
                            </tr>
+                           <tr>
                                 <td class="TextoFormulario">
                                      Requisitos:
                                 </td>
                                 <td class="TextoFormulario">
                                      Fecha de Vencimiento:
                                 </td>
-                                <td>
-                                     Text Box
+                                <td id="fvencimiento" name="fvencimiento">
+                                     
                                 </td>
+                          </tr>
                            <tr>
-                                <td>
+                                <td rowspan="3">
+                                  <div id="lista" name="lista">
+                                     
+                                  </div>                                  
                                 </td>
                                 <td class="TextoFormulario">
                                      Tiempo:
                                 </td>
-                                <td>
-                                     Text Box
+                                <td id="tiempo" name="tiempo">
+                                    
                                 </td>
                            </tr>
                            <tr>
-                                <td>
-                                </td>
                                 <td class="TextoFormulario">
                                      %UIT
                                 </td>
-                                <td>
-                                      text Box
+                                <td id="uit" name="uit">
+                                     
                                 </td>
                            </tr>
                            <tr>
-                                 <td>
-                                 </td>
                                  <td class="TextoFormulario">
                                       Valor S/
                                  </td>
-                                 <td>
-                                      Text Box
+                                 <td id="valor" name="valor">
+                                     
                                  </td>
                            </tr>
                            <tr>
                                  <td>
-                                     <a href="" class="Sbutton"> Guardar y Derivar</a>
+                                    <center>  <input type="submit" value="GUARDAR" class="Sbutton"> </center>
                                  </td>
                                  <td>
-                                     <a href="" class="Sbutton">Guardar</a>
+                                     <a href="/" class="Sbutton">Cancelar</a>
                                  </td>
                                  <td>
-                                     <a href="" class="Sbutton">Cancelar</a>
+                                     
                                  </td>
                            </tr>                        
                        </table>
+                    </div>
                  </div>
              </div>
+            </form>
           </center>
           </div>
+      </div>
+      <div id="Copirigh">
+        Copyright <a href="http://www.sigmadelsur.com">Sigmadelsur</a> © 2013 Todos Los Derechos Reservados
       </div>
    </center>   
    </body>

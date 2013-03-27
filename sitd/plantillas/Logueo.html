@@ -1,5 +1,6 @@
 <html>
    <head>
+       <title> Login Sistema </title>
    </head>
    <body>
    <center>
@@ -15,7 +16,7 @@
                      <form name = "FormLogin" action='/Logueo/' method='POST'>{% csrf_token %}
                       <tr>
                            <td colspan = "2">
-                             <center> Login </center>
+                             <center class="TextoLogincavesera">  </center>
                            </td>
                       </tr>
                       <tr>
@@ -35,14 +36,13 @@
                             </td>
                       </tr>
                       <tr>
-                            <td>
+                            <td colspan="2">
                                 <center> <input type="submit" class="button" value='Ingresar'> </center>
                             </td>
-                            <td>
-                            </td>
-                      </tr><br>
+                            
+                      </tr>                      
                       <tr>
-                        <td colspan = "2">
+                        <td colspan = "2" class="TextoError">
                            {{ Info }}
                         <td/>
                       </tr>

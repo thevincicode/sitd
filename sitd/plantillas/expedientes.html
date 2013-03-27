@@ -71,7 +71,7 @@ function toogle(a,b,c)
 				  			document.getElementById("ventana1").innerHTML="";
 
 				  			var contenedor = document.getElementById('ventana1'); 
-							var nuevodiv = '<div>Oficina destino: <select id="oficina" name="oficina"> {% for org in oficinas %} <option value="{{org.id}}"> {{org.nombre|capfirst}} </option> {% endfor %}  </select> Folios: 28  Son las {{hora}} </div> ';
+							var nuevodiv = '<div>Oficina destino: <select id="oficina" name="oficina"> {% for org in oficinas %} <option value="{{org.id}}"> {{org.nombre|capfirst}} </option> {% endfor %}  </select>  Son las {{hora}} </div> ';
 				 			contenedor.innerHTML += nuevodiv;							
 							nuevodiv='';
 							var tabla=new Array();
@@ -295,18 +295,6 @@ function archivar(a,b,c)
 				}
 </script>
 
-<script type="text/javascript" charset="utf-8">
-(function(){
-	('#menu2 li a').click(function(event){
-		var elem = (this).next();
-		if(elem.is('ul')){
-			event.preventDefault();
-			('#menu2 ul:visible').not(elem).slideUp();
-			elem.slideToggle();
-		}
-	});
-});
-</script>
   	<head>
 	<title>Bandeja-Tramite documentario</title>
 	<meta charset='utf-8'>
@@ -321,7 +309,12 @@ function archivar(a,b,c)
 					  	{{organizacion.nombre|title}}</h3>
 				</div>
 				<div id = "Info">
-					<h1 ><img src="{{ STATIC_URL }}Imagenes/usuario.png">usuario  <img src="{{ STATIC_URL }}Imagenes/oficina.png">oficina </h1>
+					<h4>
+						<img src="{{ STATIC_URL }}Imagenes/usuario.png">{{NombreUsuario}}      <img src="{{ STATIC_URL }}Imagenes/oficina.png">{{NombreOficina}}
+						<a href="/LogueoSalir">    
+							<ACRONYM title=" Salir del sistema"><img src="{{ STATIC_URL }}Imagenes/logout.png"></ACRONYM>
+						</a>
+					</h4>
 				</div>
 				<div id="PanelIzquierdo">
 					<center>
@@ -329,7 +322,7 @@ function archivar(a,b,c)
 							 <p class="Menus">Opciones </p>
 						</div>             
 						<div id="Opciones"><br>
-							<a href="NuevoExpediente.html" class="button">Nuevo</a>
+							<a href="/expediente/nuevo" class="button">Nuevo</a>
 							<br>
 							<div id = "Expedientes">
 							   <p class="SMenus">EXPEDIENTES</p>
@@ -339,7 +332,7 @@ function archivar(a,b,c)
 							</div>
 							<div id="Reportes">
 							   <p class="SMenus">Reportes</p>
-							   <a href="" class="Sbutton">Reportes</a>
+							   <a href="/reportes/" class="Sbutton">Reportes</a>
 							</div> 
 							<form action='/buscar/' name="buscar" method="GET">
 								<div>
@@ -354,8 +347,8 @@ function archivar(a,b,c)
 							<ul class="menu2">
 							    <li><a href="#">INSTITUCION</a>
 							      <ul>
-							        <li><a href="/trabajadores">Trabajadores</a></li>
-							        <li><a href="/oficinas">Oficinas</a></li>
+							        <li><a href="/TrabajadorControl">Trabajadores</a></li>
+							        <li><a href="/OficinaControl">Oficinas</a></li>
 							        <li><a href="/organizacion">Institucion</a></li>
 							      </ul>
 							    </li>
@@ -399,8 +392,8 @@ function archivar(a,b,c)
 									<table class="table" width="700" border="0" >
 										<tr class="TextoFormulario">
 											<th scope="col"></th>
-											<th scope="col">Numero</th>
-											<th scope="col">Codigo Expediente</th>
+											<th scope="col">Codigo</th>
+											<th scope="col">Nro Doc</th>
 											<th scope="col">Presentado por</th>
 											<th scope="col">Asunto</th>
 											<th scope="col">Destino</th>
@@ -468,7 +461,7 @@ function archivar(a,b,c)
 				</center>
 			</div>
 			<div id="Copirigh">
-				Copyright Sigmadelsur © 2013 Todos Los Derechos Reservados
+				Copyright <a href="http://www.sigmadelsur.com"></a> Sigmadelsur © 2013 Todos Los Derechos Reservados
 			</div>	
 		</center>
 	</body>

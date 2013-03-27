@@ -6,10 +6,18 @@
    <link href="estilo.css" rel="stylesheet" type="text/css">
       <div id="Contenedor">
           <div id = "Cavesera">
-              <h3 class = "Texto"><img src="Imagenes/logo.JPG" align="left">SISTEMA DE TRAMITE DOCUMENTARIO<BR>MUNICIPALIDAD PROVINCIAL DE GRAU </h3>
+              <h3 class = "Texto"><img src='{{MEDIA_URL}}{{organizacion.logo}}' align="left"> SISTEMA DE TRAMITE DOCUMENTARIO<BR>
+              {{organizacion.nombre|title}}
+            </h3>
           </div>
    
           <div id = "Info">
+            <h4>
+            <img src="{{ STATIC_URL }}Imagenes/usuario.png">{{NombreUsuario}}      <img src="{{ STATIC_URL }}Imagenes/oficina.png">{{NombreOficina}}
+            <a href="/LogueoSalir">    
+              <ACRONYM title=" Salir del sistema"><img src="{{ STATIC_URL }}Imagenes/logout.png"></ACRONYM>
+            </a>
+          </h4>
           </div>
           <div id="PanelIzquierdo">
              <center>
@@ -17,16 +25,17 @@
                  <p class="Menus">Opciones </p>
              <div>             
              <div id="Opciones"><br>
-                <a href="NuevoExpediente.html" class="button">Nuevo</a>
+                <a href="/expediente/nuevo" class="button">Nuevo</a>
                 <br>
                 <div id = "Expedientes">
                    <p class="SMenus">Expedientes</p>
-                   <a href="EnOficina.html" class="Sbutton">En Oficina</a><br><br>
-                   <a href="" class="Sbutton">Por Llegar</a>
+                   <a href="/" class="Sbutton">En Oficina</a><br><br>
+                   <a href="/bandeja" class="Sbutton">Por Llegar</a><br><br>
+                   <a href="/archivados" class="Sbutton">Archivados</a><br><br>
                 </div>
                 <div id="Reportes">
                    <p class="SMenus">Reportes</p>
-                   <a href="" class="Sbutton">Reportes</a>
+                   <a href="/reportes/" class="Sbutton">Reportes</a>
                 </div> 
                 <form action='/buscar/' name="buscar" method="GET">
                 <div>
@@ -55,7 +64,9 @@
           </div>          
       </div>
       <div id="Copirigh">
-        Copyright Sigmadelsur © 2013 Todos Los Derechos Reservados
+       
+        Copyright <a href="http://www.sigmadelsur.com">Sigmadelsur</a> © 2013 Todos Los Derechos Reservados
+      
       </div>  
    </center>   
    </body>

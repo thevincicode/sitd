@@ -214,6 +214,12 @@ function imprSelec()
 					  	{{organizacion.nombre|title}}</h3>
 				</div>
 				<div id = "Info">
+					<h4>
+						<img src="{{ STATIC_URL }}Imagenes/usuario.png">{{NombreUsuario}}      <img src="{{ STATIC_URL }}Imagenes/oficina.png">{{NombreOficina}}
+						<a href="/LogueoSalir">    
+							<ACRONYM title=" Salir del sistema"><img src="{{ STATIC_URL }}Imagenes/logout.png"></ACRONYM>
+						</a>
+					</h4>
 				</div>
 				<div id="PanelIzquierdo">
 					<center>
@@ -221,7 +227,7 @@ function imprSelec()
 							 <p class="Menus">Opciones </p>
 						</div>             
 						<div id="Opciones"><br>
-							<a href="NuevoExpediente.html" class="button">Nuevo</a>
+							<a href="/expediente/nuevo" class="button">Nuevo</a>
 							<br>
 							<div id = "Expedientes">
 							   <p class="SMenus">EXPEDIENTES</p>
@@ -231,7 +237,7 @@ function imprSelec()
 							</div>
 							<div id="Reportes">
 							   <p class="SMenus">Reportes</p>
-							   <a href="" class="Sbutton">Reportes</a>
+							   <a href="/reportes/" class="Sbutton">Reportes</a>
 							</div> 
 							<form action='/buscar/' name="buscar" method="GET">
 								<div>
@@ -253,7 +259,7 @@ function imprSelec()
 						 <div id="BPanelDerecho">
 							<div id = "MenusOficina">
 								 <form name="marcar"> 
-								 <input type="checkbox" name="mTodos" OnClick="activar()">
+								 <input type="checkbox" name="mTodos" OnClick="activar()">todos
 								 <input type="button" value="RECIBIR" class="Sbutton" onclick="recibir('block','modal','ventana')"></input>
 								 <input type="button" value="IMPRIMIR" class="Sbutton" onclick="imprSelec()"></input>  
 								</form>
@@ -261,28 +267,28 @@ function imprSelec()
 							
 							<form name="datos" method="get">
 								<div id="imprimir">
-									<table>
-										<tr>
-											<th scope="col"></th>
-											<th scope="col">Numero</th>
-											<th scope="col">Codigo Expediente</th>
-											<th scope="col">Presentado por</th>
-											<th scope="col">Asunto</th>
-											<th scope="col">Destino</th>
-											<th scope="col">Fecha</th>
-											<th scope="col">Detalles</th>
+									<table border="0" width="710" heigth="460">
+										<tr class="TextoFormulario">
+											<th scope="col" width="30"></th>
+											<th scope="col" width="70">Codigo</th>
+											<th scope="col" width="50">Nro. Doc</th>
+											<th scope="col" width="150">Presentado por</th>
+											<th scope="col" width="150">Asunto</th>
+											<th scope="col" width="75">Destino</th>
+											<th scope="col" width="105">Fecha</th>
+											<th scope="col" width="80">Detalles</th>
 										</tr>
 										
 										{% for elemento in lista %}
 										<tr>
-											<td><input type="checkbox" name="che" id="che{{elemento.id}}"><br></td>
-											<td>{{elemento.nro_exp}}</td>
-											<td>{{elemento.nro_doc}}</td>
-											<td>{{elemento.interesado}}</td>
-											<td>{{elemento.asunto}}</td>
-											<td>{{elemento.oficina.nombre}}</td>	    	
-											<td>{{elemento.f_registro}}</td>
-											<td><a href="/expediente/{{elemento.id}}">Detalles</a></td>
+											<td class="TextoData"><input type="checkbox" name="che" id="che{{elemento.id}}"><br></td>
+											<td class="TextoData">{{elemento.nro_exp}}</td>
+											<td class="TextoData">{{elemento.nro_doc}}</td>
+											<td class="TextoData">{{elemento.interesado}}</td>
+											<td class="TextoData">{{elemento.asunto}}</td>
+											<td class="TextoData">{{elemento.oficina.nombre}}</td>	    	
+											<td class="TextoData">{{elemento.f_registro}}</td>
+											<td class="TextoData"><a href="/expediente/{{elemento.id}}">Detalles</a></td>
 
 											<script type="text/javascript">
 												documentos("che{{elemento.id}}","{{elemento.nro_exp}}","{{elemento.nro_doc}}","{{elemento.interesado}}","{{elemento.asunto}}","{{elemento.oficina.nombre}}","{{elemento.f_registro}}","{{elemento.id}}");
@@ -310,7 +316,9 @@ function imprSelec()
 				</center>
 			</div>
 			<div id="Copirigh">
-				Copyright Sigmadelsur © 2013 Todos Los Derechos Reservados
+				
+				Copyright <a href="http://www.sigmadelsur.com">Sigmadelsur</a> © 2013 Todos Los Derechos Reservados
+			
 			</div>	
 		</center>
 	</body>

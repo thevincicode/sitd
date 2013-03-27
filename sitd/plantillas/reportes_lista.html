@@ -1,7 +1,23 @@
 <!DOCTYPE html>
 <html lang='es'>
+<script lenguage="javascript">
+function imprSelec()
+				{
+					var ficha=document.getElementById("Cavesera");
+					var ubicacion=document.getElementById("APanelDerecho");
+					var imprimirr=document.getElementById("imprimir");
+					//ficha.innerHTML += imprimirr;
+					var ventimp=window.open(' ','popimpr');
+					ventimp.document.write(ficha.innerHTML);
+					ventimp.document.write(ubicacion.innerHTML);
+					ventimp.document.write(imprimirr.innerHTML);
+					ventimp.document.close();
+					ventimp.print();
+					ventimp.close();
+				}
+</script>
   	<head>
-	<title>Control de los trabajadores</title>
+	<title>Bandeja-Tramite documentario</title>
 	<meta charset='utf-8'>
 	</head>
 	<body>
@@ -10,7 +26,7 @@
 		<center>
 			<div id="Contenedor">
 				<div id = "Cavesera">
-					  <h3 class = "Texto"><img src='{{MEDIA_URL}}{{organizacion.logo}}' align="left"> SISTEMA DE TRAMITE DOCUMENTARIO<BR>
+					 <h3 class = "Texto"><img src='{{MEDIA_URL}}{{organizacion.logo}}' align="left"> SISTEMA DE TRAMITE DOCUMENTARIO<BR>
 					  	{{organizacion.nombre|title}}</h3>
 				</div>
 				<div id = "Info">
@@ -54,37 +70,42 @@
 			<div id="PanelDerecho">
 				<center>
 						 <div id="APanelDerecho">
-							 <p class="Menus">Listado General De Los Trabajadores Registradas</p>
+							 <p class="Menus">{{titulo}}</p>
 						 </div>
 						 <div id="BPanelDerecho">
 							<div id = "MenusOficina">
-								<a href='/TrabajadorNuevo' class='button'>Nuevo</a>
+								 <a href="" class ="Sbutton" onclick="imprSelec()">Imprimir</a>  
 							</div>
-							{{ Info }}<br>
-							<form name='ListaTrabajador' method='GET'>
-								<table border="0" width="710">
-									<tr class="TextoFormulario">
-										<th scope="col">Dni</th>
-										<th scope="col">Nombres</th>
-										<th scope="col">Apellidos</th>
-										<th scope="col">Cargo</th>
-										<th scope="col">Oficina</th>
-										<th scope="col"></th>
-										<th scope="col"></th>
-									</tr>
-									{% for Item in Form %}
-									<tr class="TextoData">
-										<td>{{Item.dni}}</td>
-										<td>{{Item.nombre}}</td>
-										<td>{{Item.apellidos}}</td>
-										<td>{{Item.cargo}}</td>
-										<td>{{Item.oficina}}</td>
-										<td><a href='/TrabajadorEliminarDesicion/{{Item.id}}'>Eliminar</a></td>
-										<td><a href='/trabajador/editar/{{Item.id}}'>Modificar</a></td>
-									</tr>
-									{% endfor %}
-								</table>
+							
+							<form name="datos" method="get">
+								<div id="imprimir">
+									<table border="0" width="710" heigth="460">
+										<tr class="TextoFormulario">
+											<th scope="col">Codigo</th>
+											<th scope="col">Nro. Doc</th>
+											<th scope="col">Presentado por</th>
+											<th scope="col">Asunto</th>
+											<th scope="col">Destino</th>
+											<th scope="col">Fecha</th>
+											<th scope="col">Detalles</th>
+										</tr>
+										
+										{% for elemento in lista %}
+										<tr class="TextoData">
+											<td>{{elemento.expediente.nro_exp}}</td>
+											<td>{{elemento.expediente.nro_doc}}</td>
+											<td>{{elemento.expediente.interesado}}</td>
+											<td>{{elemento.expediente.asunto}}</td>
+											<td>{{elemento.oficina.nombre}}</td>	    	
+											<td>{{elemento.fecha}}</td>
+											<td><a href="/expediente/{{elemento.expediente.id}}">Detalles</a></td>
+
+										</tr>
+										{% endfor %}
+									</table>
+								</div>
 							</form>
+							
 						</div>						
 				</center>
 			</div>

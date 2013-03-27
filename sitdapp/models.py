@@ -14,7 +14,7 @@ class Calendario(models.Model):
 			return self.dia
 
 class Oficina(models.Model):
-	nombre=models.CharField(max_length=75, verbose_name='Nombre',unique=True,help_text='Nombre del Pais')
+	nombre=models.CharField(max_length=75, verbose_name='Nombre',unique=True,help_text='Nombre de la Oficina')
 	descripcion=models.TextField(max_length=250, verbose_name='Descripcion')
 
 	def __unicode__(self):
@@ -28,15 +28,19 @@ class Formulario(models.Model):
 		return self.nombre
 		
 class Trabajador(models.Model):
+	GENDER_CHOICES = (
+		('N', 'NO'),
+        ('S', 'SI'),
+    )
 	dni=models.CharField(max_length=8, unique=True)
 	nombre=models.CharField(max_length=100)
 	apellidos=models.CharField(max_length=250)
-	f_nacimiento=models.DateTimeField(verbose_name=u'Fecha de Nacimiento')
+	f_nacimiento=models.DateField(verbose_name=u'Fecha de Nacimiento')
 	cargo=models.CharField(max_length=25)
 	usuario=models.CharField(max_length=25)
-	psw=models.CharField(max_length=25)
+	psw=models.CharField(max_length=25, verbose_name=u'PASSWORD')
 	oficina=models.ForeignKey(Oficina)
-
+	admin=models.CharField(max_length=1,choices=GENDER_CHOICES)
 	def __unicode__(self):
 			return self.dni
 
@@ -64,9 +68,9 @@ class TupaRequisitos(models.Model):
 			return self.requisito
 
 class Tupa(models.Model):
-	denominacion=models.CharField(max_length=25)
-	descripcion=models.TextField(max_length=75)
-	autoridad=models.TextField(max_length=75)
+	denominacion=models.CharField(max_length=85)
+	descripcion=models.TextField(max_length=275)
+	autoridad=models.TextField(max_length=175)
 	porcentaje=models.DecimalField(max_digits=10,decimal_places=2)
 	valor=models.DecimalField(max_digits=10,decimal_places=3)
 	tiempo=models.IntegerField()
@@ -88,16 +92,17 @@ class ExpedienteTipo(models.Model):
 
 class Expediente(models.Model):
 	GENDER_CHOICES = (
+		('C', 'Creado'),
         ('E', 'Enviado'),
         ('R', 'Recivido'),
         ('A', 'Archivado'),
     )
 	nro_exp=models.IntegerField(verbose_name=u'Numero de Expediente')
-	nro_doc=models.CharField(max_length=25)
+	nro_doc=models.CharField(max_length=95,verbose_name=u'codigo externo')
 	folios=models.IntegerField()
-	interesado=models.CharField(max_length=55)
-	asunto=models.CharField(max_length=80)
-	destinatario=models.CharField(max_length=80)
+	interesado=models.CharField(max_length=155)
+	asunto=models.CharField(max_length=180)
+	destinatario=models.CharField(max_length=180)
 	f_inicio=models.DateTimeField(verbose_name=u'Fecha de Inicio')
 	f_registro=models.DateTimeField(verbose_name=u'Fecha de Registro')
 	f_fint=models.DateTimeField(verbose_name=u'Fecha de fin del tramite')
@@ -107,6 +112,8 @@ class Expediente(models.Model):
 	tupa=models.ForeignKey(Tupa)
 	oficina=models.ForeignKey(Oficina)
 	archivomotivo=models.TextField(max_length=1500)
+	roficina=models.CharField(max_length=250, verbose_name=u'Oficina donde se registro')
+	rusuario=models.CharField(max_length=250, verbose_name=u'Usuario que registro')
 
 	def __unicode__(self):
 			return self.nro_doc
@@ -120,6 +127,7 @@ class Proveido(models.Model):
 
 class Derivar(models.Model):
 	GENDER_CHOICES = (
+        ('C', 'Creado'),
         ('E', 'Enviado'),
         ('R', 'Recibido'),
         ('A', 'Archivado'),
@@ -129,11 +137,7 @@ class Derivar(models.Model):
 	comentario=models.TextField(max_length=150)
 	proveido=models.ForeignKey(Proveido)
 	oficina=models.ForeignKey(Oficina)
-
-class DerivarDetalle(models.Model):
-	fecha=models.DateTimeField()
 	expediente=models.ForeignKey(Expediente)
-	derivar=models.ForeignKey(Derivar)
 
 class ExpedienteHistorial(models.Model):
 	f_salida=models.DateTimeField(verbose_name=u'Fecha de Salida')

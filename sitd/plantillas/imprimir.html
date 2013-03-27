@@ -1,7 +1,26 @@
 <!DOCTYPE html>
 <html lang='es'>
+<script lenguage="javascript">
+var doc=new Array();
+var doc_derivar=new Array();
+
+function imprSelec()
+				{
+					var ficha=document.getElementById("Cavesera");
+					var ubicacion=document.getElementById("APanelDerecho");
+					var imprimirr=document.getElementById("imprimir");
+					//ficha.innerHTML += imprimirr;
+					var ventimp=window.open(' ','popimpr');
+					ventimp.document.write(ficha.innerHTML);
+					ventimp.document.write(ubicacion.innerHTML);
+					ventimp.document.write(imprimirr.innerHTML);
+					ventimp.document.close();
+					ventimp.print();
+					ventimp.close();
+				}
+</script>
   	<head>
-	<title>Control de los trabajadores</title>
+	<title>Bandeja-Tramite documentario</title>
 	<meta charset='utf-8'>
 	</head>
 	<body>
@@ -10,7 +29,7 @@
 		<center>
 			<div id="Contenedor">
 				<div id = "Cavesera">
-					  <h3 class = "Texto"><img src='{{MEDIA_URL}}{{organizacion.logo}}' align="left"> SISTEMA DE TRAMITE DOCUMENTARIO<BR>
+					 <h3 class = "Texto"><img src='{{MEDIA_URL}}{{organizacion.logo}}' align="left"> SISTEMA DE TRAMITE DOCUMENTARIO<BR>
 					  	{{organizacion.nombre|title}}</h3>
 				</div>
 				<div id = "Info">
@@ -54,37 +73,41 @@
 			<div id="PanelDerecho">
 				<center>
 						 <div id="APanelDerecho">
-							 <p class="Menus">Listado General De Los Trabajadores Registradas</p>
+							 <p class="Menus">Registrado en: {{expediente.roficina}}</p>
 						 </div>
 						 <div id="BPanelDerecho">
 							<div id = "MenusOficina">
-								<a href='/TrabajadorNuevo' class='button'>Nuevo</a>
+								 <a href="" class ="Sbutton" onclick="imprSelec()">Imprimir</a>  
 							</div>
-							{{ Info }}<br>
-							<form name='ListaTrabajador' method='GET'>
-								<table border="0" width="710">
-									<tr class="TextoFormulario">
-										<th scope="col">Dni</th>
-										<th scope="col">Nombres</th>
-										<th scope="col">Apellidos</th>
-										<th scope="col">Cargo</th>
-										<th scope="col">Oficina</th>
-										<th scope="col"></th>
-										<th scope="col"></th>
-									</tr>
-									{% for Item in Form %}
-									<tr class="TextoData">
-										<td>{{Item.dni}}</td>
-										<td>{{Item.nombre}}</td>
-										<td>{{Item.apellidos}}</td>
-										<td>{{Item.cargo}}</td>
-										<td>{{Item.oficina}}</td>
-										<td><a href='/TrabajadorEliminarDesicion/{{Item.id}}'>Eliminar</a></td>
-										<td><a href='/trabajador/editar/{{Item.id}}'>Modificar</a></td>
-									</tr>
-									{% endfor %}
-								</table>
+							
+							<form name="datos" method="get">
+								<div id="imprimir">
+									<table border="0" width="710" heigth="460">
+										<tr >
+											<td class="TextoFormulario">Codigo:</td>
+											<td>{{expediente.nro_exp}}</td>
+											<td class="TextoFormulario">Nro. Doc:</td>
+											<td>{{expediente.nro_doc}}</td>
+											<td class="TextoFormulario">Fecha y Hora:</td>
+											<td>{{expediente.f_registro}}</td>
+										</tr>
+										<tr>
+											<td class="TextoFormulario">Asunto:</td>
+											<td colspan="2">{{expediente.asunto}} </td>
+											<td class="TextoFormulario">Interesado</td>
+											<td colspan="2">{{expediente.interesado}}</td>
+										</tr>
+										<tr>
+											<td class="TextoFormulario">Destinatario:</td>
+											<td colspan="2">{{expediente.destinatario}} </td>
+											<td class="TextoFormulario"></td>
+											<td colspan="2"></td>
+										</tr>
+									</table><br>
+									<div>Registrado por: {{expediente.rusuario}}</div>
+								</div>
 							</form>
+							
 						</div>						
 				</center>
 			</div>

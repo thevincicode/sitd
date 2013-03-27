@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from sitdapp.models import Tupa, TupaRequisitos, Proveido, ExpedienteTipo, Organizacion, Trabajador
+from sitdapp.models import Tupa, TupaRequisitos, Proveido, ExpedienteTipo, Organizacion, Trabajador, Oficina
 
 class TupaForm(ModelForm):
 	class Meta:
@@ -33,3 +33,7 @@ class OficinaNuevoForm(forms.Form):
 class TrabajadorNuevoForm(ModelForm):
 	class Meta:
 		model=Trabajador
+
+class OficinaForm(ModelForm):
+	class Meta:
+		model=Oficina
