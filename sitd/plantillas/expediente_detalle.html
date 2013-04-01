@@ -36,8 +36,8 @@ function imprSelec()
 		<center>
 			<div id="Contenedor">
 				<div id = "Cavesera">
-					 <h3 class = "Texto"><img src='{{MEDIA_URL}}{{organizacion.logo}}' align="left"> SISTEMA DE TRAMITE DOCUMENTARIO<BR>
-					  	{{organizacion.nombre|title}}</h3>
+					 <h3 class = "Texto"><img src='{{MEDIA_URL}}{{organizacion.logo}}' align="left">{{organizacion.nombre}}<BR>
+					  	 Sistema de Tramite Documentario</h3>
 				</div>
 				<div id = "Info">
 					<h4>
@@ -182,6 +182,7 @@ function imprSelec()
 									    		<th class="TextoFormulario" scope="col">Proveido</th>
 									    		<th class="TextoFormulario" scope="col">Estado</th>
 									    		<th class="TextoFormulario" scope="col">Fecha Recep/ hora</th>
+									    		<th class="TextoFormulario" scope="col">Por</th>
 									    		<th class="TextoFormulario" scope="col">Comentario</th>
 									    	</tr>
 				                          	{% for histo in historial %}
@@ -192,6 +193,7 @@ function imprSelec()
 										    	<td>{{histo.proveido}}</td>
 												<td>{{histo.estado}}</td>	    	
 										    	<td>{{histo.f_recepcion}}</td>
+										    	<td>{{histo.usuario}}</td>
 										    	<td><a href="/expediente/{{expediente.id}}/comentario/{{histo.id}}">comentario</a></td>
 											</tr>
 											{% endfor %}

@@ -283,6 +283,8 @@ def expediente_derivar(request):
                 print 'oficinas ' + str(len(oficina_s))
                 print 'proveidos ' + str(len(proveido_s))
                 print 'el comentario fue: ' + comentario
+                UsuarioLogueado=Trabajador.objects.get(id=request.COOKIES[ 'IdUsuario' ])   
+                NombreUsuario=UsuarioLogueado.nombre+' '+UsuarioLogueado.apellidos
                 #html="<html><body>logramos capturar datos, intentando acceder</body></html>"
                 try:
                     if(len(id_s)>0): 
@@ -316,7 +318,7 @@ def expediente_derivar(request):
                                 #generando un objeto de tipo DerivarDetalle y guardando                        
                                 oficina_o=expediente.oficina
                                 #agregando al historial
-                                historial_obj=ExpedienteHistorial(f_salida=datetime.now(),o_origen=oficina_o,o_destino=oficina.nombre,f_recepcion=datetime.now(),estado="enviado", proveido=proveido.nombre,expediente=expediente, ubicacion="-",comentario=comentario)
+                                historial_obj=ExpedienteHistorial(f_salida=datetime.now(),o_origen=oficina_o,o_destino=oficina.nombre,f_recepcion=datetime.now(),estado="enviado", proveido=proveido.nombre,expediente=expediente, ubicacion="-",comentario=comentario,usuario=NombreUsuario)
                                 historial_obj.save()
                                 print "se agrego al historial"
                                 #actualizando estado del expediente
@@ -352,6 +354,7 @@ def expediente_archivar(request):
             if request.method == "POST":
                 UsuarioLogueado=Trabajador.objects.get(id=request.COOKIES[ 'IdUsuario' ])
                 UsuarioOficina=Oficina.objects.get(id=UsuarioLogueado.oficina_id)
+                NombreUsuario=UsuarioLogueado.nombre+' '+UsuarioLogueado.apellidos
                 id_s = request.POST.getlist("hi")
                 comentario = request.POST.get('comentarioA','')
                 #oficina = request.POST.get('oficina', '')
@@ -377,11 +380,22 @@ def expediente_archivar(request):
                             #agrando estado archivado
                             last=Derivar.objects.filter(expediente=expediente_upd).order_by('fecha')
                             lon=len(last)
-                            historial_last=last[lon-1]
-                            derivar_obj=Derivar(fecha=datetime.now(),estado="A",comentario=comentario,proveido=historial_last.proveido,oficina=UsuarioOficina,expediente=expediente_upd)
-                            derivar_obj.save()
-                            print "se archivo en Derivados"
-
+                            try:
+                                historial_last=last[lon-1]
+                                derivar_obj=Derivar(fecha=datetime.now(),estado="A",comentario=comentario,proveido=historial_last.proveido,oficina=UsuarioOficina,expediente=expediente_upd)
+                                derivar_obj.save()
+                                print "se archivo en Derivados"
+                                #agregando al historial
+                                historial_obj=ExpedienteHistorial(f_salida=datetime.now(),o_origen=historial_last.oficina,o_destino=UsuarioOficina.nombre,f_recepcion=datetime.now(),estado="Archivado", proveido=historial_last.proveido,expediente=expediente_upd, ubicacion="-",comentario=comentario,usuario=NombreUsuario)
+                                historial_obj.save()
+                            except Exception, e:
+                                proveido=Proveido.objects.get(pk=1)
+                                derivar_obj=Derivar(fecha=datetime.now(),estado="A",comentario=comentario,proveido=proveido,oficina=UsuarioOficina,expediente=expediente_upd)
+                                derivar_obj.save()
+                                print "se archivo en Derivados por defecto"
+                                #agregando al historial
+                                historial_obj=ExpedienteHistorial(f_salida=datetime.now(),o_origen=UsuarioOficina,o_destino=UsuarioOficina,f_recepcion=datetime.now(),estado="Archivado", proveido=proveido.nombre,expediente=expediente_upd, ubicacion="-",comentario=comentario,usuario=NombreUsuario)
+                                historial_obj.save()
                             html='<html><head><meta http-equiv="Refresh" content="2;url=/archivados"></head><body>Los datos fueron registrados <a href="/archivados">aqui</a></body></html>'
                         return HttpResponse(html)
                     else:
@@ -407,6 +421,7 @@ def expediente_recibir(request):
             if request.method == "POST":
                 UsuarioLogueado=Trabajador.objects.get(id=request.COOKIES[ 'IdUsuario' ])
                 UsuarioOficina=Oficina.objects.get(id=UsuarioLogueado.oficina_id)
+                NombreUsuario=UsuarioLogueado.nombre+' '+UsuarioLogueado.apellidos
                 id_s = request.POST.getlist("hi")
                 #oficina = request.POST.get('oficina', '')
                 print 'documentos ' + str(len(id_s))
@@ -431,7 +446,7 @@ def expediente_recibir(request):
                             last=ExpedienteHistorial.objects.filter(expediente=expediente_upd).order_by('f_salida')
                             lon=len(last)
                             historial_last=last[lon-1]
-                            historial_obj=ExpedienteHistorial(f_salida=datetime.now(),o_origen=historial_last.o_origen,o_destino=expediente_upd.oficina.nombre,f_recepcion=datetime.now(),estado="Recibido", proveido=historial_last.proveido,expediente=expediente_upd, ubicacion="-",comentario="recibido")
+                            historial_obj=ExpedienteHistorial(f_salida=datetime.now(),o_origen=historial_last.o_origen,o_destino=expediente_upd.oficina.nombre,f_recepcion=datetime.now(),estado="Recibido", proveido=historial_last.proveido,expediente=expediente_upd, ubicacion="-",comentario="recibido",usuario=NombreUsuario)
                             historial_obj.save()
 
                             last2=Derivar.objects.filter(expediente=expediente_upd).order_by('fecha')
@@ -1164,7 +1179,7 @@ def TrabajadorNuevo(request):
                         Ctx={'NombreUsuario':NombreUsuario,'NombreOficina':NombreOficina,'organizacion':empresa,'Info':Info,'Form':Formulario}
                         return render_to_response('TrabajadorNuevo.html',Ctx,context_instance=RequestContext(request))
                 else:
-                    Info='Error nocrea'
+                    Info='Ingrese la informacion requerida'
                     Formulario=TrabajadorNuevoForm()
                     Ctx={'NombreUsuario':NombreUsuario,'NombreOficina':NombreOficina,'organizacion':empresa,'Form':Formulario,'Info':Info}
                     return render_to_response('TrabajadorNuevo.html',Ctx,context_instance=RequestContext(request))
@@ -1493,13 +1508,13 @@ def LogueoNuevo(request):
                     return render_to_response('Logueo.html',Ctx,context_instance=RequestContext(request))
             else:
                 Formulario=LogueoNuevoForm()
-                Info='else PPosts'
+                Info='Ingrese su informacion'
                 Ctx={'Info':Info,'Form':Formulario}
                 return render_to_response('Logueo.html',Ctx,context_instance=RequestContext(request))
     except Exception, e:
         request.session['EstadoLogueo']=False
         Formulario=LogueoNuevoForm()
-        Info='exception '+ str(e)
+        Info='Ingrese su informacion'
         Ctx={'Info':Info,'Form':Formulario}
         return render_to_response('Logueo.html',Ctx,context_instance=RequestContext(request))
 

@@ -1,3 +1,4 @@
+#encoding:utf-8
 from django.forms import ModelForm
 from django import forms
 from sitdapp.models import Tupa, TupaRequisitos, Proveido, ExpedienteTipo, Organizacion, Trabajador, Oficina

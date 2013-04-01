@@ -1,3 +1,4 @@
+#encoding:utf-8
 from django.db import models
 from django.contrib.auth.models import User
 from django.forms import ModelForm
@@ -35,9 +36,9 @@ class Trabajador(models.Model):
 	dni=models.CharField(max_length=8, unique=True)
 	nombre=models.CharField(max_length=100)
 	apellidos=models.CharField(max_length=250)
-	f_nacimiento=models.DateField(verbose_name=u'Fecha de Nacimiento')
+	f_nacimiento=models.DateField(verbose_name=u'Fecha de Nacimiento',help_text='dias/mes/año')
 	cargo=models.CharField(max_length=25)
-	usuario=models.CharField(max_length=25)
+	usuario=models.CharField(max_length=25,unique=True)
 	psw=models.CharField(max_length=25, verbose_name=u'PASSWORD')
 	oficina=models.ForeignKey(Oficina)
 	admin=models.CharField(max_length=1,choices=GENDER_CHOICES)
@@ -149,6 +150,7 @@ class ExpedienteHistorial(models.Model):
 	expediente=models.ForeignKey(Expediente)
 	ubicacion=models.CharField(max_length=150)
 	comentario=models.TextField(max_length=1000, verbose_name=u'Comentario',help_text='maximo 1000 caracteres')
+	usuario=models.CharField(max_length=500)
 
 class Organizacion(models.Model):
 	nombre=models.CharField(max_length=500, verbose_name=u'Nombre de la Institucion')

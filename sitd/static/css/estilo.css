@@ -139,7 +139,7 @@
    border-radius: 8px;
    margin-top: 10px;   
    text-align: left;
-   margin-left: 20px;
+   margin-left: 10px;
    overflow:auto;
    z-index:8;
 }
@@ -178,7 +178,8 @@
    background-color: ; 
    border: 1px #DCDCE6 solid;
    border-radius: 0px;
-   margin-top: 0px;  
+   margin-top: 0px; 
+   overflow:auto; 
 }
 #DetalleDerivar
 {
@@ -353,14 +354,14 @@
 }
 .TextoFormulario
 {
-   color: #0033CC;
+   color: blue;
    font-family: Calibri;
    font-size: 11pt;
    text-align: center;
 }
 .TextoFormulario2
 {
-   color: #0033CC;
+   color: blue;
    font-family: Calibri;
    font-size: 11pt;
    text-align: left;
@@ -372,8 +373,30 @@
    font-size: 11pt;
    text-align: center;
 }
-.table
-{
- margin-left: 0px;
- margin-top: 0px;
+
+table {
+  margin:0px;padding:0px;
+  border:0px solid #62d14a;
+}
+tr:nth-child(odd){ background-color:#dbf9df; }
+tr:nth-child(even)    { background-color:#ffffff;}
+td{
+  vertical-align:middle;    
+  border:1px solid #62d14a;
+  border-width:0px 0px 1px 0px;
+  text-align:center;
+  font-size:14px;
+  font-family:Verdana;
+  font-weight:normal;
+  color:#000000;
+}
+th{
+  background-color:#62d14a;
+  border:0px solid #62d14a;
+  text-align:center;
+  border-width:0px 0px 1px 0px;
+  font-size:16px;
+  font-family:Arial;
+  font-weight:bold;
+  color:#ffffff;
 }

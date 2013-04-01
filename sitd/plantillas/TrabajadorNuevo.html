@@ -10,8 +10,8 @@
 		<center>
 			<div id="Contenedor">
 				<div id = "Cavesera">
-					  <h3 class = "Texto"><img src='{{MEDIA_URL}}{{organizacion.logo}}' align="left"> SISTEMA DE TRAMITE DOCUMENTARIO<BR>
-					  	{{organizacion.nombre|title}}</h3>
+					  <h3 class = "Texto"><img src='{{MEDIA_URL}}{{organizacion.logo}}' align="left">{{organizacion.nombre}}<BR>
+					  	 Sistema de Tramite Documentario</h3>
 				</div>
 				<div id = "Info">
 					<h4>
@@ -62,7 +62,7 @@
 							<form action='/TrabajadorNuevo/' method='POST'>
 								{% csrf_token %}
 								{{ Form.as_p }}
-								<input type='submit' value='Ingresar'>
+								<input type='submit' value='Guardar'><br>
 								{{ Info }}
 							</form>	
 						</div>						

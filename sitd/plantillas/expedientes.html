@@ -305,8 +305,8 @@ function archivar(a,b,c)
 		<center>
 			<div id="Contenedor">
 				<div id = "Cavesera">
-					  <h3 class = "Texto"><img src='{{MEDIA_URL}}{{organizacion.logo}}' align="left"> SISTEMA DE TRAMITE DOCUMENTARIO<BR>
-					  	{{organizacion.nombre|title}}</h3>
+					  <h3 class = "Texto"><img src='{{MEDIA_URL}}{{organizacion.logo}}' align="left">{{organizacion.nombre}}<BR>
+					  	 Sistema de Tramite Documentario</h3>
 				</div>
 				<div id = "Info">
 					<h4>
@@ -382,7 +382,6 @@ function archivar(a,b,c)
 									 <input type="checkbox"  id="mTodos" name="mTodos" onclick="activar()">Todos</input>
 									 <input type="button" value="DERIVAR" class="Sbutton" onclick="toogle('block','modal','ventana')"></input>
 									 <input type="button" value="ARCHIVAR" class="Sbutton" onclick="archivar('block','modal2','ventana2')"></input>
-									 <a href="" class ="Sbutton">ADJUNTAR</a>               
 									 <input type="button" value="IMPRIMIR" class="Sbutton" onclick="imprSelec()"></input>
 								 </form> 
 							</div>
@@ -396,7 +395,7 @@ function archivar(a,b,c)
 											<th scope="col">Nro Doc</th>
 											<th scope="col">Presentado por</th>
 											<th scope="col">Asunto</th>
-											<th scope="col">Destino</th>
+											<th scope="col">Destinatario</th>
 											<th scope="col">Fecha</th>
 											<th scope="col">Detalles</th>
 										</tr>
@@ -408,12 +407,12 @@ function archivar(a,b,c)
 											<td width="100">{{elemento.nro_doc}}</td>
 											<td width="150">{{elemento.interesado}}</td>
 											<td width="100">{{elemento.asunto}}</td>
-											<td width="100">{{elemento.oficina.nombre}}</td>	    	
+											<td width="100">{{elemento.destinatario}}</td>	    	
 											<td width="80">{{elemento.f_registro}}</td>
 											<td width="50"><a href="/expediente/{{elemento.id}}" name="ref">Detalles</a></td>
 
 											<script type="text/javascript">
-												documentos("che{{elemento.id}}","{{elemento.nro_exp}}","{{elemento.nro_doc}}","{{elemento.interesado}}","{{elemento.asunto}}","{{elemento.oficina.nombre}}","{{elemento.f_registro}}","{{elemento.id}}");
+												documentos("che{{elemento.id}}","{{elemento.nro_exp}}","{{elemento.nro_doc}}","{{elemento.interesado}}","{{elemento.asunto}}","{{elemento.destinatario}}","{{elemento.f_registro}}","{{elemento.id}}");
 											</script>
 										</tr>
 										{% endfor %}
@@ -461,7 +460,7 @@ function archivar(a,b,c)
 				</center>
 			</div>
 			<div id="Copirigh">
-				Copyright <a href="http://www.sigmadelsur.com"></a> Sigmadelsur © 2013 Todos Los Derechos Reservados
+				Copyright <a href="http://www.sigmadelsur.com">Sigmadelsur</a> © 2013 Todos Los Derechos Reservados
 			</div>	
 		</center>
 	</body>
