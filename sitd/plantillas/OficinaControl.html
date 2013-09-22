@@ -3,6 +3,7 @@
   	<head>
 	<title>Control de la oficinas</title>
 	<meta charset='utf-8'>
+	<link rel="shortcut icon" href="{{ STATIC_URL }}Imagenes/favicon.ico"/>
 	</head>
 	<body>
 	  	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/modal.css">
@@ -74,7 +75,7 @@
 										<td>{{Item.nombre}}</td>
 										<td>{{Item.descripcion}}</td>
 										<td><a href='/OficinaEliminarDesicion/{{Item.id}}'>Eliminar</a></td>
-										<td><a href='/oficina/editar/{{Item.id}}'>Modificar</a></td>
+										<td><a href='/Oficina/editar/{{Item.id}}'>Modificar</a></td>
 									</tr>
 									{% endfor %}
 								</table>
@@ -84,7 +85,7 @@
 			</div>
 			<div id="Copirigh">
 				
-				Copyright <a href="http://www.sigmadelsur.com">Sigmadelsur</a> © 2013 Todos Los Derechos Reservados
+				Copyright <a href="http://www.sigmadelsur.com" target="_blank">Sigmadelsur</a> © 2013 Todos Los Derechos Reservados
 			
 			</div>	
 		</center>

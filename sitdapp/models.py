@@ -9,21 +9,21 @@ class Calendario(models.Model):
 	dia=models.CharField(max_length=15, verbose_name=u'dia de la semana', help_text='lunes, martes..')
 	fecha=models.DateTimeField()
 	estado=models.BooleanField(verbose_name='laborable',help_text='laborable o feriado')
-	descripcion=models.TextField(max_length=250,verbose_name='(Opcional)')	
+	descripcion=models.TextField(max_length=250,verbose_name='(Opcional)',blank=True)	
 	
 	def __unicode__(self):
 			return self.dia
 
 class Oficina(models.Model):
 	nombre=models.CharField(max_length=75, verbose_name='Nombre',unique=True,help_text='Nombre de la Oficina')
-	descripcion=models.TextField(max_length=250, verbose_name='Descripcion')
+	descripcion=models.TextField(max_length=250, verbose_name='Descripcion',blank=True)
 
 	def __unicode__(self):
 			return self.nombre
 
 class Formulario(models.Model):
 	nombre=models.CharField(max_length=25)
-	descripcion=models.TextField(max_length=50)
+	descripcion=models.TextField(max_length=50,blank=True)
 
 	def __unicode__(self):
 		return self.nombre
@@ -70,7 +70,7 @@ class TupaRequisitos(models.Model):
 
 class Tupa(models.Model):
 	denominacion=models.CharField(max_length=85)
-	descripcion=models.TextField(max_length=275)
+	descripcion=models.TextField(max_length=275,blank=True)
 	autoridad=models.TextField(max_length=175)
 	porcentaje=models.DecimalField(max_digits=10,decimal_places=2)
 	valor=models.DecimalField(max_digits=10,decimal_places=3)
@@ -86,7 +86,7 @@ class TupaVinculo(models.Model):
 
 class ExpedienteTipo(models.Model):
 	nombre=models.CharField(max_length=25)
-	descripcion=models.TextField(max_length=75)
+	descripcion=models.TextField(max_length=75,blank=True)
 
 	def __unicode__(self):
 			return self.nombre
@@ -121,7 +121,7 @@ class Expediente(models.Model):
 
 class Proveido(models.Model):
 	nombre=models.CharField(max_length=250)
-	descripcion=models.TextField(max_length=350)
+	descripcion=models.TextField(max_length=350,blank=True)
 	
 	def __unicode__(self):
 			return self.nombre
@@ -135,10 +135,11 @@ class Derivar(models.Model):
     )
 	fecha=models.DateTimeField()
 	estado=models.CharField(max_length=1,choices=GENDER_CHOICES)
-	comentario=models.TextField(max_length=150)
+	comentario=models.TextField(max_length=150,blank=True)
 	proveido=models.ForeignKey(Proveido)
-	oficina=models.ForeignKey(Oficina)
+	oficina=models.ManyToManyField(Oficina, blank=True, editable=False, related_name='Oficina Destino')
 	expediente=models.ForeignKey(Expediente)
+	oficinao=models.ManyToManyField(Oficina, blank=True, editable=False, related_name='Oficina Origen')
 
 class ExpedienteHistorial(models.Model):
 	f_salida=models.DateTimeField(verbose_name=u'Fecha de Salida')
@@ -149,13 +150,13 @@ class ExpedienteHistorial(models.Model):
 	proveido=models.CharField(max_length=250)
 	expediente=models.ForeignKey(Expediente)
 	ubicacion=models.CharField(max_length=150)
-	comentario=models.TextField(max_length=1000, verbose_name=u'Comentario',help_text='maximo 1000 caracteres')
+	comentario=models.TextField(max_length=1000, verbose_name=u'Comentario',help_text='maximo 1000 caracteres',blank=True)
 	usuario=models.CharField(max_length=500)
 
 class Organizacion(models.Model):
 	nombre=models.CharField(max_length=500, verbose_name=u'Nombre de la Institucion')
 	logo=models.ImageField(upload_to='Imagen',verbose_name='Imagen logo')
-	direccion=models.CharField(max_length=850, verbose_name=u'direccion')
+	direccion=models.CharField(max_length=850, verbose_name=u'direccion',blank=True)
 
 	def __unicode__(self):
 			return self.nombre

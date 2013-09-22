@@ -22,6 +22,7 @@ function imprSelec()
   	<head>
 	<title>Bandeja-Tramite documentario</title>
 	<meta charset='utf-8'>
+	<link rel="shortcut icon" href="{{ STATIC_URL }}Imagenes/favicon.ico"/>
 	</head>
 	<body>
 	  	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/modal.css">
@@ -100,8 +101,8 @@ function imprSelec()
 										<tr>
 											<td class="TextoFormulario">Destinatario:</td>
 											<td colspan="2">{{expediente.destinatario}} </td>
-											<td class="TextoFormulario"></td>
-											<td colspan="2"></td>
+											<td class="TextoFormulario">Folios</td>
+											<td colspan="2">{{expediente.folios}}</td>
 										</tr>
 									</table><br>
 									<div>Registrado por: {{expediente.rusuario}}</div>
@@ -112,7 +113,7 @@ function imprSelec()
 				</center>
 			</div>
 			<div id="Copirigh">
-				Copyright <a href="http://www.sigmadelsur.com">Sigmadelsur</a> © 2013 Todos Los Derechos Reservados
+				Copyright <a href="http://www.sigmadelsur.com" target="_blank">Sigmadelsur</a> © 2013 Todos Los Derechos Reservados
 			</div>	
 		</center>
 	</body>

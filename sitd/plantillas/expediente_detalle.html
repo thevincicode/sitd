@@ -29,6 +29,7 @@ function imprSelec()
   	<head>
 	<title>Bandeja-Tramite documentario</title>
 	<meta charset='utf-8'>
+	<link rel="shortcut icon" href="{{ STATIC_URL }}Imagenes/favicon.ico"/>
 	</head>
 	<body>
 	  	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/modal.css">
@@ -70,7 +71,7 @@ function imprSelec()
 								   <p class="SMenus">Codigo y/o Interesado</p>
 								   <br>
 								   <input type="text" name="b" id="b"></input>
-								   <input type="submit" value="BUSCAR"></input>
+								   <input type="submit" value="BUSCAR" class="Sbutton"></input>
 								</div>
 							</form>                 
 						</div>
@@ -135,9 +136,11 @@ function imprSelec()
 				                            <td>
 				                               {{expediente.asunto}}
 				                            </td>
-				                            <td>
+				                            <td class="TextoFormulario">
+				                            	Folios
 				                            </td>
 				                            <td>
+				                            	{{expediente.folios}}
 				                            </td>
 				                            <td>
 				                            </td>
@@ -205,7 +208,7 @@ function imprSelec()
 				</center>
 			</div>
 			<div id="Copirigh">
-				Copyright <a href="http://www.sigmadelsur.com">Sigmadelsur</a> © 2013 Todos Los Derechos Reservados
+				Copyright <a href="http://www.sigmadelsur.com" target="_blank">Sigmadelsur</a> © 2013 Todos Los Derechos Reservados
 			</div>
 		</center>
 	</body>

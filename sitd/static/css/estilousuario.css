@@ -1,27 +1,35 @@
 #Contenedor
 {
-  width:1000px;
+  max-width:1000px;*/
+  margin: 0px;
+  padding: 0px;
   /*background-color: #EDEDED;*/ 
 }
 #Cavesera
 {
-   height: 50px;
-   width: 1000px;
+   display: inline-block;
+   height: auto;
+   /*max-width: 1000px;*/
+   width: 100%;
+   border-radius: 8px 8px 0px 0px;
    background-color: #066A9B;
 }
 #Info
 {
+  display: block;
    height: 50px;
-   width: 1000px;
+   max-width: 1000px;
+   text-align: right;
+   color: #066A9B;
    background-color: #ECECFF;
 }
 #CuerpoLogin
 {
   height: 400px;
-  width: 1000px;
+  max-width: 1000px;
   border: 3px #DCDCE6 solid;
   margin-top: 0px;
-  border-radius: 8px;
+  border-radius: 0px 0px 8px 8px;
 }
 #Logueo
 {
@@ -32,19 +40,19 @@
   border-radius: 8px;
   background-color: #EDEDED;
 }
-
 .TextoLogin
 {
    font-family: Helvetica;
    font-size: 12pt;
+   color: #066A9B;
    text-align: right;
    
 }
 .TextoLogincavesera
 {
    font-family: Helvetica;
+   color: #066A9B;
    font-size: 14pt;
-   text-shadow:5px 5px 5px #000000;
    
 }
 .TextoError
@@ -55,28 +63,46 @@
    text-align: center;
    
 }
-
-/*Estilo Botones*/
-.button {
-  background: #DCDCE6; /* #384954;*/
-  background: -webkit-gradient(linear, left top, left bottom, from(white), to(white));
-  background: -moz-linear-gradient(top, white, white);
-  /*border-top: 1px solid red #96D1F8*/;
-  color: black;  /*Color de texto*/
-  font-size: 13px;
-  font-family: Helvetica, Arial, Sans-Serif;
-  padding: 10px 15px;
-  text-decoration: none;
-  vertical-align: middle; 
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
-  -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
-  box-shadow: rgba(0,0,0,1) 0 1px 0;
-  text-shadow: rgba(0,0,0,.4) 0 1px 0;
+h3{
+  color: #FFFFFF;
+  text-align: center;
 }
-.button:hover {
-  background: #DCDCE6;
-  color: black;
+.button{
+    color: black;
+    padding:3px;
+    background: #FBFBFB;
+    border-radius: 3px;
+    border: 1px solid #919191;
+}
+.button:hover{
+    color: #333333;
+    padding: 4px;
+    cursor: pointer;
+    background: #F2F2F2;
+    border-radius: 3px;
+    border: 1px solid #5D5D5D;
+}
+@media screen and (max-width: 400px)
+{
+  #Info
+  {
+    display: block;
+    height: auto;
+  }
+
+  #CuerpoLogin
+  {
+    height: auto;
+    max-width: auto;
+    border: 0px #DCDCE6 solid;
+  }
+
+  #Logueo
+  {
+    height: auto;
+    width: auto;
+    margin-top: 0px;
+    border-radius: 0px 0px 8px 8px;
+    background-color: #EDEDED;
+  }
 }

@@ -258,16 +258,16 @@ def buscador(request):
             empresa = Organizacion.objects.get(id=1) 
             buscar=int(buscar)
             buscador=Expediente.objects.filter(nro_exp=buscar)
-            return render_to_response('buscador.html',{'lista':buscador,'organizacion':empresa},context_instance=RequestContext(request))    
+            return render_to_response('buscador.html',{'lista':buscador,'organizacion':empresa,'b':buscar},context_instance=RequestContext(request))    
         except Exception, e:
             empresa = Organizacion.objects.get(id=1) 
-            buscador=Expediente.objects.filter(interesado__contains=buscar)
-            return render_to_response('buscador.html',{'lista':buscador,'organizacion':empresa},context_instance=RequestContext(request))    
+            buscador=Expediente.objects.filter(interesado__icontains=buscar)
+            return render_to_response('buscador.html',{'lista':buscador,'organizacion':empresa,'b':buscar},context_instance=RequestContext(request))    
             print "parametro a buscar es: " + buscar
             #buscar = '%r' % request.GET['b']
         
     else:
-        html="<html><body>no envio ningun parametro</body></html>"
+        html='<html><head><meta http-equiv="Refresh" content="2;url=/Logueo"></head><body>No se ingreso ningun parametro<a href="/">aqui</a></body></html>'
         return HttpResponse(html)
 
 def expediente_derivar(request):
@@ -310,7 +310,10 @@ def expediente_derivar(request):
                                 idexpediente=v
                                 expediente=get_object_or_404(Expediente, pk=idexpediente)
                                 #generando un objeto de tipo Derivar y guardando
-                                derivar_obj=Derivar(fecha=datetime.now(),estado="E",comentario=comentario,proveido=proveido,oficina=oficina,expediente=expediente)
+                                derivar_obj=Derivar(fecha=datetime.now(),estado="E",comentario=comentario,proveido=proveido,expediente=expediente)
+                                derivar_obj.save()
+                                derivar_obj.oficina.add(expediente.oficina)
+                                derivar_obj.oficinao.add(oficina)
                                 derivar_obj.save()
                                 print "se derivo"
                                 #obteniendo el ultimo id registrado
@@ -382,7 +385,10 @@ def expediente_archivar(request):
                             lon=len(last)
                             try:
                                 historial_last=last[lon-1]
-                                derivar_obj=Derivar(fecha=datetime.now(),estado="A",comentario=comentario,proveido=historial_last.proveido,oficina=UsuarioOficina,expediente=expediente_upd)
+                                derivar_obj=Derivar(fecha=datetime.now(),estado="A",comentario=comentario,proveido=historial_last.proveido,expediente=expediente_upd)
+                                derivar_obj.save()
+                                derivar_obj.oficina.add(expediente_upd.oficina)
+                                derivar_obj.oficinao.add(UsuarioOficina)
                                 derivar_obj.save()
                                 print "se archivo en Derivados"
                                 #agregando al historial
@@ -390,7 +396,10 @@ def expediente_archivar(request):
                                 historial_obj.save()
                             except Exception, e:
                                 proveido=Proveido.objects.get(pk=1)
-                                derivar_obj=Derivar(fecha=datetime.now(),estado="A",comentario=comentario,proveido=proveido,oficina=UsuarioOficina,expediente=expediente_upd)
+                                derivar_obj=Derivar(fecha=datetime.now(),estado="A",comentario=comentario,proveido=proveido,expediente=expediente_upd)
+                                derivar_obj.save()
+                                derivar_obj.oficina.add(expediente_upd.oficina)
+                                derivar_obj.oficinao.add(UsuarioOficina)
                                 derivar_obj.save()
                                 print "se archivo en Derivados por defecto"
                                 #agregando al historial
@@ -452,7 +461,10 @@ def expediente_recibir(request):
                             last2=Derivar.objects.filter(expediente=expediente_upd).order_by('fecha')
                             lon2=len(last2)
                             historial_last2=last2[lon2-1]
-                            derivar_obj=Derivar(fecha=datetime.now(),estado="R",comentario="Recibido",proveido=historial_last2.proveido,oficina=UsuarioOficina,expediente=expediente_upd)
+                            derivar_obj=Derivar(fecha=datetime.now(),estado="R",comentario="Recibido",proveido=historial_last2.proveido,expediente=expediente_upd)
+                            derivar_obj.save()
+                            derivar_obj.oficina.add(UsuarioOficina)
+                            derivar_obj.oficinao.add(historial_last.o_origen)
                             derivar_obj.save()
                             print "se recibio en Derivados"
 
@@ -1039,16 +1051,20 @@ def expedientetipo_editar(request, id_tipo):
             NombreUsuario=UsuarioLogueado.nombre+' '+UsuarioLogueado.apellidos
             NombreOficina=UsuarioOficina.nombre 
             empresa = Organizacion.objects.get(id=1)
-            if UsuarioLogueado.admin=="S":   
-                tupa=get_object_or_404(Proveido,pk=id_tipo)
-                formulario=ExpedienteTipoForm(request.POST or None, instance=tupa)
-                if formulario.is_valid():
-                    formulario.save()
-                    return HttpResponseRedirect('/expediente/tipos')
-                return render_to_response('expedientetipoform.html',{'NombreUsuario':NombreUsuario,'NombreOficina':NombreOficina,'organizacion':empresa,'formulario':formulario},context_instance=RequestContext(request))
-            else:        
-                html='<html><head><meta http-equiv="Refresh" content="3;url=/"></head><body>Solo Administradores pueden ver esta opcion. <a href="/">Principal</a> </body></html>'
-                return HttpResponse(html)
+            try:
+                if UsuarioLogueado.admin=="S":   
+                    tupa=get_object_or_404(ExpedienteTipo,pk=id_tipo)
+                    formulario=ExpedienteTipoForm(request.POST or None, instance=tupa)
+                    if formulario.is_valid():
+                        formulario.save()
+                        return HttpResponseRedirect('/expediente/tipos')
+                    return render_to_response('expedientetipoform.html',{'NombreUsuario':NombreUsuario,'NombreOficina':NombreOficina,'organizacion':empresa,'formulario':formulario},context_instance=RequestContext(request))
+                else:        
+                    html='<html><head><meta http-equiv="Refresh" content="3;url=/"></head><body>Solo Administradores pueden ver esta opcion. <a href="/">Principal</a> </body></html>'
+                    return HttpResponse(html)
+            except Exception, e:
+                raise e
+                return HttpResponseRedirect('/expediente/tipos')
         else:        
             html='<html><head><meta http-equiv="Refresh" content="3;url=/Logueo"></head><body>Error de parametro En el Login</body></html>'
             return HttpResponse(html)
@@ -1060,11 +1076,17 @@ def expedientetipo_eliminar(request,id_tipo):
     if request.COOKIES.has_key( 'EstadoLogueo' ):
         value = request.COOKIES[ 'EstadoLogueo' ]
         if value=="Y3n1K0pSnlf3v7FdKRYaY5UdYvAfsYqZ":
+            UsuarioLogueado=Trabajador.objects.get(id=request.COOKIES[ 'IdUsuario' ])   
+            UsuarioOficina=Oficina.objects.get(id=UsuarioLogueado.oficina_id)
+            NombreUsuario=UsuarioLogueado.nombre+' '+UsuarioLogueado.apellidos
+            NombreOficina=UsuarioOficina.nombre 
+            empresa = Organizacion.objects.get(id=1)
             try:
                 if UsuarioLogueado.admin=="S":
                     exptipo=ExpedienteTipo.objects.get(pk=id_tipo)
                     exptipo.delete()
-                    return HttpResponse('delete')
+                    html='<html><head><meta http-equiv="Refresh" content="3;url=/expediente/tipos"></head><body>El Tipo de Expediente Fue eliminado Correctamente. <a href="/expediente/tipos">Tipos de Expediente</a> </body></html>'
+                    return HttpResponse(html)
                 else:        
                     html='<html><head><meta http-equiv="Refresh" content="3;url=/"></head><body>Solo Administradores pueden ver esta opcion. <a href="/">Principal</a> </body></html>'
                     return HttpResponse(html)
@@ -1569,16 +1591,16 @@ def reportes_fechas(request):
                             print str(start_date)
                             end_date = start_date+timedelta(days=1)
                             print str(end_date)
-                            recibidos=Derivar.objects.filter(Q(estado="R") | Q(estado="C")).filter(fecha__range=(start_date, end_date)).filter(oficina=UsuarioOficina)
+                            recibidos=Derivar.objects.filter(Q(estado="R") | Q(estado="C"), fecha__range=(start_date, end_date), oficina=UsuarioOficina)
                             return render_to_response('reportes_lista.html',{'NombreUsuario':NombreUsuario,'NombreOficina':NombreOficina,'organizacion':empresa,'lista':recibidos,'titulo':titulo},context_instance=RequestContext(request))
                         except Exception, e:
                             html="<html><body> Excepcion <br>"+str(e)+"</body></html>"
                             return HttpResponse(html)
-                    elif intervalo==2:               
+                    elif intervalo==2:
                         titulo="DOCUMENTOS RECIBIDOS ENTRE ("+fecha1+" - "+fecha2+")"
                         start_date=datetime.strptime(fecha1, "%d/%m/%Y")
                         end_date=datetime.strptime(fecha2, "%d/%m/%Y")
-                        recibidos=Derivar.objects.filter(estado="R").filter(oficina=UsuarioOficina)
+                        recibidos=Derivar.objects.filter(estado="R").filter(oficina=UsuarioOficina).filter(fecha__range=(start_date, end_date))
                         return render_to_response('reportes_lista.html',{'NombreUsuario':NombreUsuario,'NombreOficina':NombreOficina,'organizacion':empresa,'lista':recibidos,'titulo':titulo},context_instance=RequestContext(request))
                     else:
                         html="<html><body>Error de Intervalo</body></html>"
@@ -1589,14 +1611,14 @@ def reportes_fechas(request):
                         start_date=datetime.now().strftime("%d/%m/%Y") 
                         start_date=datetime.strptime(start_date, "%d/%m/%Y")
                         end_date = start_date+timedelta(days=1)
-                        recibidos=Derivar.objects.filter(estado="E").filter(fecha__range=(start_date, end_date)).filter(oficina=UsuarioOficina)
+                        recibidos=Derivar.objects.filter(estado="E", oficinao=UsuarioOficina,fecha__range=(start_date, end_date))
                         return render_to_response('reportes_lista.html',{'NombreUsuario':NombreUsuario,'NombreOficina':NombreOficina,'organizacion':empresa,'lista':recibidos,'titulo':titulo},context_instance=RequestContext(request))
                     
                     elif intervalo==2:               
                         titulo="DOCUMENTOS DERIVADOS ENTRE ("+fecha1+" - "+fecha2+")"
                         start_date=datetime.strptime(fecha1, "%d/%m/%Y")
                         end_date=datetime.strptime(fecha2, "%d/%m/%Y")
-                        recibidos=Derivar.objects.filter(estado="E").filter(oficina=UsuarioOficina)
+                        recibidos=Derivar.objects.filter(estado="E").filter(oficinao=UsuarioOficina).filter(fecha__range=(start_date, end_date))
                         return render_to_response('reportes_lista.html',{'NombreUsuario':NombreUsuario,'NombreOficina':NombreOficina,'organizacion':empresa,'lista':recibidos,'titulo':titulo},context_instance=RequestContext(request))
                     else:
                         html="<html><body>Error de Intervalo</body></html>"
@@ -1614,7 +1636,7 @@ def reportes_fechas(request):
                         titulo="DOCUMENTOS ARCHIVADOS ENTRE ("+fecha1+" - "+fecha2+")"
                         start_date=datetime.strptime(fecha1, "%d/%m/%Y")
                         end_date=datetime.strptime(fecha2, "%d/%m/%Y")
-                        recibidos=Derivar.objects.filter(estado="R").filter(oficina=UsuarioOficina)
+                        recibidos=Derivar.objects.filter(estado="A").filter(fecha__range=(start_date, end_date)).filter(oficina=UsuarioOficina)
                         return render_to_response('reportes_lista.html',{'NombreUsuario':NombreUsuario,'NombreOficina':NombreOficina,'organizacion':empresa,'lista':recibidos,'titulo':titulo},context_instance=RequestContext(request))
                     else:
                         html="<html><body>Error de Intervalo</body></html>"
@@ -1656,5 +1678,3 @@ def reportes_fechas(request):
     else:        
         html='<html><head><meta http-equiv="Refresh" content="3;url=/Logueo"></head><body>Logueese en el sistema para tener acceso <a href="/Logueo">aqui</a></body></html>'
         return HttpResponse(html)
-
-

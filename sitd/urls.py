@@ -5,12 +5,7 @@ from django.conf import settings
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 admin.autodiscover()
-
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'sitd.views.home', name='home'),
-    # url(r'^sitd/', include('sitd.foo.urls')),
-
     url(r'^$','sitdapp.views.expedientes'),
     url(r'^expediente/nuevo$','sitdapp.views.expediente_nuevo'),
     url(r'^expediente/registrar$','sitdapp.views.expediente_registrar'),
@@ -55,7 +50,7 @@ urlpatterns = patterns('',
     url(r'^OficinaNuevo/$','sitdapp.views.OficinaNuevo'),
     url(r'^OficinaControl/$','sitdapp.views.OficinaControl'),
     url(r'^OficinaEliminar/(?P<id_oficina>\d+)$','sitdapp.views.OficinaEliminar'),
-    url(r'^oficina/editar/(?P<id_oficina>\d+)$','sitdapp.views.oficina_editar'),
+    url(r'^Oficina/editar/(?P<id_oficina>\d+)$','sitdapp.views.oficina_editar'),
     url(r'^OficinaEliminarDesicion/(?P<id_oficina>\d+)$','sitdapp.views.OficinaEliminarDesicion'),
     url(r'^TrabajadorNuevo/$','sitdapp.views.TrabajadorNuevo'),
     url(r'^TrabajadorControl/$','sitdapp.views.TrabajadorControl'),
@@ -70,3 +65,4 @@ urlpatterns = patterns('',
         {'document_root':settings.MEDIA_ROOT,}
         ),
 )
+

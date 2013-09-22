@@ -1,18 +1,18 @@
 #Contenedor
 {
-  width:1000px;
+  max-width:1000px;
   /*background-color: #EDEDED;*/ 
 }
 #Cavesera
 {
    height: 50px;
-   width: 1000px;
+   max-width: 1000px;
    background-color: #066A9B;
 }
 #Info
 {
    height: 50px;
-   width: 1000px;
+   max-width: 1000px;
    background-color: #ECECFF;
    color: #0033CC
 }
@@ -28,7 +28,7 @@
 #PanelDerecho
 {
    height: 700px;
-   width: 750px;
+   max-width: 750px;
    background-color: ;
    margin-top: -605px;
    margin-left: 250px;
