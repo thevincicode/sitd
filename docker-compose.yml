@@ -20,13 +20,8 @@ services:
     container_name: "sitd_web"
     build:
       context: .
-      dockerfile: Dockerfile
-    #command: ["./wait-for-mysql.sh", "db", "ls -l"]
-    #command: ["./wait-for-it.sh", "db:3306", "--", "ls -l"]
+      dockerfile: Dockerfile    
     command: ./wait-for-it.sh db:3306 -- bash -c "python manage.py syncdb --noinput && python manage.py runserver 0.0.0.0:8000"
-    #python manage.py runserver 0.0.0.0:8000
-    #volumes:
-    #  - ./:/code
     ports:
       - "9000:8000"
     depends_on:
