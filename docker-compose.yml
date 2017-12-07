@@ -1,12 +1,14 @@
 version: '2.1'
-
 services:
+
   db:
     image: mysql
     container_name: "sitd_db"
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example   
+    ports:
+      - 9002:3306
   adminer:
     image: adminer
     container_name: "sitd_adminer"
@@ -19,7 +21,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: python manage.py runserver 0.0.0.0:8000
+    #command: ["./wait-for-mysql.sh", "db", "ls -l"]
+    #command: ["./wait-for-it.sh", "db:3306", "--", "ls -l"]
+    command: ./wait-for-it.sh db:3306 -- bash -c "python manage.py syncdb --noinput && python manage.py runserver 0.0.0.0:8000"
+    #python manage.py runserver 0.0.0.0:8000
+    #volumes:
+    #  - ./:/code
     ports:
       - "9000:8000"
     depends_on:
