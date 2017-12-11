@@ -161,10 +161,10 @@ class Derivar(models.Model):
     comentario = models.TextField(max_length=150, blank=True)
     proveido = models.ForeignKey(Proveido, on_delete=models.CASCADE)
     oficina = models.ManyToManyField(
-        Oficina, blank=True, editable=False, related_name='Oficina Destino')
+        Oficina, blank=True, editable=False, related_name='%(app_label)s_%(class)s_destino')
     expediente = models.ForeignKey(Expediente, on_delete=models.CASCADE)
     oficinao = models.ManyToManyField(
-        Oficina, blank=True, editable=False, related_name='Oficina Origen')
+        Oficina, blank=True, editable=False, related_name='%(app_label)s_%(class)s_origen')
 
 
 class ExpedienteHistorial(models.Model):

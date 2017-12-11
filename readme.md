@@ -5,9 +5,17 @@ on main path
     - should be a migration
  into sitd_web
 > docker exec -t -i sitd_web /bin/bash
-> python manage.py syncdb 
+> python manage.py makemigrations sitdapp
+> python manage.py migrate
+
 create superadmin
 > python manage.py createsuperuser
+
+#Develop
+> pip install virtualenvwrapper-win
+> mkvirtualenv sitdproject
+> workon sitdproject
+> pip Install -r requirements.txt
 
 
 if file not found

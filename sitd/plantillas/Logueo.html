@@ -1,9 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang='es'>
    <head>
        <title> Login Sistema </title>
        <link rel="shortcut icon" href="{{ STATIC_URL }}Imagenes/favicon.ico"/>
-      <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/estilousuario.css">
+      <link rel="stylesheet" type="text/css" href="{% static "css/estilousuario.css" %}">
    </head>
    <body>
    <center>
@@ -19,7 +20,7 @@
                    <input type="text" name="b" id="b"></input>
                    <input type="submit" value="BUSCAR" class="button"></input>
                 </div>
-              </form> 
+              </form>
           </div>
           <div id="CuerpoLogin">
                <div id="Logueo">
@@ -36,7 +37,7 @@
                             </td>
                             <td>
                                 {{ Form.Usuario }}
-                            </td>                            
+                            </td>
                       </tr>
                       <tr>
                             <td class="TextoLogin">
@@ -49,8 +50,8 @@
                       <tr>
                             <td colspan="2">
                                 <center> <input type="submit" class="button" value='Ingresar'> </center>
-                            </td>                            
-                      </tr>                      
+                            </td>
+                      </tr>
                       <tr>
                         <td colspan = "2" class="TextoError">
                            {{ Info }}
@@ -58,9 +59,9 @@
                       </tr>
                      </form>
                    </table>
-               </div>             
-          </div>          
+               </div>
+          </div>
       </div>
-   </center>   
+   </center>
    </body>
 </html>
