@@ -34,3 +34,5 @@ MySql TCP 192.168.99.100: 9002
 #Site
 
 URL: 192.168.99.100:9000
+
+LICENSE: MIT - Non commercia, until use request, otherwise use as you want.
