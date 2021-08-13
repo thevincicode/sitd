@@ -13,7 +13,7 @@ python manage.py makemigrations sitdapp
 python manage.py migrate
 ```
 
-create superadmin
+## create superadmin
 ```
 python manage.py createsuperuser
 ```
@@ -47,3 +47,4 @@ mysql -u root -p -h 192.168.99.100 --port 9002
 URL: 192.168.99.100:9000
 
 LICENSE: MIT - Non commercial, until use request, otherwise use as you want.
+

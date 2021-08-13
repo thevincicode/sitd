@@ -2,10 +2,12 @@ version: '2.1'
 services:
 
   db:
-    image: mysql
+    image: mysql:8.0.26
     container_name: "sitd_db"
     restart: always
+    command: --default-authentication-plugin=mysql_native_password
     environment:
+      MYSQL_DATABASE: dbsitd
       MYSQL_ROOT_PASSWORD: example   
     ports:
       - 9002:3306
