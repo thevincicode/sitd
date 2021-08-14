@@ -1,6 +1,5 @@
 version: '2.1'
 services:
-
   db:
     image: mysql:8.0.26
     container_name: "sitd_db"
