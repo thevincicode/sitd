@@ -22,12 +22,12 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         # Or path to database file if using sqlite3.
         'NAME': 'dbsitd',
-        'USER': 'root',                      # Not used with sqlite3.
-        'PASSWORD': 'example',                  # Not used with sqlite3.
+        'USER': 'man13k',                      # Not used with sqlite3.
+        'PASSWORD': 'db_example',                  # Not used with sqlite3.
         # Set to empty string for localhost. Not used with sqlite3.
-        'HOST': '192.168.99.100',
+        'HOST': 'man13k.mysql.pythonanywhere-services.com',
         # Set to empty string for default. Not used with sqlite3.
-        'PORT': '9002',
+        'PORT': '3306',
     }
 }
 
@@ -81,6 +81,8 @@ STATICFILES_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
+
+ALLOWED_HOSTS = ['man13k.pythonanywhere.com']
 
 # List of finder classes that know how to find static files in
 # various locations.
