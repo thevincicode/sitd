@@ -1,4 +1,4 @@
-version: '2.1'
+version: '3'
 services:
     web:
         image: sitd_web
@@ -6,7 +6,7 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        command: ./wait-for-it.sh db:3306 -- bash -c "python3 manage.py migrate --noinput && python3 manage.py runserver 0.0.0.0:8000"
+        command: bash -c "python3 manage.py migrate --noinput && python3 manage.py runserver 0.0.0.0:8000"
         ports:
             - "9000:8000"
     testlink:
