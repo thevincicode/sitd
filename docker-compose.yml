@@ -1,31 +1,33 @@
 version: '2.1'
 services:
-  db:
-    image: mysql:8.0.26
-    container_name: "sitd_db"
-    restart: always
-    command: --default-authentication-plugin=mysql_native_password
-    environment:
-      MYSQL_DATABASE: dbsitd
-      MYSQL_ROOT_PASSWORD: example   
-    ports:
-      - 9002:3306
-  adminer:
-    image: adminer
-    container_name: "sitd_adminer"
-    restart: always
-    ports:
-      - 9001:8080
-  web:
-    image: sitd_web
-    container_name: "sitd_web"
-    build:
-      context: .
-      dockerfile: Dockerfile    
-    command: ./wait-for-it.sh db:3306 -- bash -c "python3 manage.py migrate --noinput && python3 manage.py runserver 0.0.0.0:8000"
-    #volumes:
-    #  - .:/code
-    ports:
-      - "9000:8000"
-    depends_on:
-      - db
+    web:
+        image: sitd_web
+        container_name: "sitd_web"
+        build:
+            context: .
+            dockerfile: Dockerfile
+        command: ./wait-for-it.sh db:3306 -- bash -c "python3 manage.py migrate --noinput && python3 manage.py runserver 0.0.0.0:8000"
+        ports:
+            - "9000:8000"
+    testlink:
+        image: docker.io/bitnami/testlink:1
+        container_name: 'testlink'
+        ports:
+            - '8080:8080'
+            - '8443:8443'
+        environment:
+            - TESTLINK_DATABASE_HOST=129.158.63.139
+            - TESTLINK_DATABASE_PORT_NUMBER=3306
+            - TESTLINK_DATABASE_USER=root
+            - TESTLINK_DATABASE_NAME=bitnami_testlink
+            - TESTLINK_DATABASE_PASSWORD_FILE=/run/secrets/db_password
+        volumes:
+            - 'testlink_data:/bitnami/testlink'
+        secrets:
+            - db_password
+secrets:
+    db_password:
+        file: db_password.txt
+volumes:
+    testlink_data:
+        driver: local
